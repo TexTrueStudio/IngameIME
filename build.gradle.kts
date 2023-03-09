@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
-    `kotlin-dsl`
     id("architectury-plugin") version "3.4-SNAPSHOT"
     id("dev.architectury.loom") version "1.0-SNAPSHOT" apply false
     kotlin("jvm") version "1.8.0" apply false
@@ -18,6 +17,8 @@ subprojects {
 
     val loom = project.extensions.getByName<LoomGradleExtensionAPI>("loom")
 
+    loom.silentMojangMappingsLicense()
+
     dependencies {
         "minecraft"("com.mojang:minecraft:${project.property("minecraft_version")}")
         "mappings"(loom.officialMojangMappings())
@@ -31,7 +32,6 @@ allprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
 
     base.archivesName.set(rootProject.property("archives_base_name").toString())
-    //base.archivesBaseName = rootProject.property("archives_base_name").toString()
     version = rootProject.property("mod_version").toString()
     group = rootProject.property("maven_group").toString()
 

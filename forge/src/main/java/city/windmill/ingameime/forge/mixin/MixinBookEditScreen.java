@@ -1,6 +1,6 @@
 package city.windmill.ingameime.forge.mixin;
 
-import city.windmill.ingameime.forge.IngameIMEClient;
+import city.windmill.ingameime.forge.IngameIMEForge;
 import city.windmill.ingameime.forge.ScreenEvents;
 import com.mojang.blaze3d.vertex.PoseStack;
 import kotlin.Pair;
@@ -26,7 +26,7 @@ abstract class MixinBookEditScreen {
             Field pos2iy = pos2i.getClass().getDeclaredField("y");
             pos2ix.setAccessible(true);
             pos2iy.setAccessible(true);
-            IngameIMEClient.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditCaret(this, new Pair<>((Integer) pos2ix.get(cir.getReturnValue()), (Integer) pos2iy.get(cir.getReturnValue()))));
+            IngameIMEForge.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditCaret(this, new Pair<>((Integer) pos2ix.get(cir.getReturnValue()), (Integer) pos2iy.get(cir.getReturnValue()))));
         } catch (Exception ignored) {
 
         }
@@ -38,7 +38,7 @@ abstract class MixinBookEditScreen {
             locals = LocalCapture.CAPTURE_FAILSOFT)
     private void onCaret_Book(PoseStack poseStack, int i, int j, float f, CallbackInfo ci,
                               int k, FormattedCharSequence formattedCharSequence, int m, int n) {
-        IngameIMEClient.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditCaret(this, new Pair<>(
+        IngameIMEForge.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditCaret(this, new Pair<>(
                 k + 36 + (114 + n) / 2
                         - Minecraft.getInstance().font.width("_"),
                 50

@@ -1,6 +1,6 @@
 package city.windmill.ingameime.forge.mixin;
 
-import city.windmill.ingameime.forge.IngameIMEClient;
+import city.windmill.ingameime.forge.IngameIMEForge;
 import city.windmill.ingameime.forge.ScreenEvents;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Matrix4f;
@@ -42,7 +42,7 @@ abstract class MixinEditSignScreen extends Screen {
             Field m13 = lv5.getClass().getDeclaredField("m13");
             m03.setAccessible(true);
             m13.setAccessible(true);
-            IngameIMEClient.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditCaret(this, new Pair<>((Integer) m03.get(lv5) + s, (Integer) m13.get(lv5) + o)));
+            IngameIMEForge.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditCaret(this, new Pair<>((Integer) m03.get(lv5) + s, (Integer) m13.get(lv5) + o)));
         } catch (Exception ignored) {
 
         }
@@ -56,7 +56,7 @@ abstract class MixinEditSignScreen extends Screen {
             Field m13 = lv5.getClass().getDeclaredField("m13");
             m03.setAccessible(true);
             m13.setAccessible(true);
-            IngameIMEClient.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditCaret(this, new Pair<>((Integer) m03.get(lv5) + v, (Integer) m13.get(lv5) + o)));
+            IngameIMEForge.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditCaret(this, new Pair<>((Integer) m03.get(lv5) + v, (Integer) m13.get(lv5) + o)));
         } catch (Exception ignored) {
 
         }

@@ -133,39 +133,39 @@ object ConfigHandler {
         return ConfigBuilder.create()
             .setTitle(TranslatableComponent("config.title"))
             .setSavingRunnable { saveConfig() }.apply {
-                getOrCreateCategory(TranslatableComponent("config.category.chat")).apply {
+                getOrCreateCategory(TranslatableComponent("config.category.ingameime.chat")).apply {
                     addEntry(
                         entryBuilder()
                             .startBooleanToggle(
-                                TranslatableComponent("desc.disableIMEInCommandMode"),
+                                TranslatableComponent("desc.ingameime.disableIMEInCommandMode"),
                                 disableIMEInCommandMode
                             )
                             .setDefaultValue(true)
-                            .setTooltip(TranslatableComponent("tooltip.disableIMEInCommandMode"))
+                            .setTooltip(TranslatableComponent("tooltip.ingameime.disableIMEInCommandMode"))
                             .setSaveConsumer { result -> disableIMEInCommandMode = result }
                             .build()
                     )
                     addEntry(
                         entryBuilder()
                             .startBooleanToggle(
-                                TranslatableComponent("desc.autoReplaceSlashChar"),
+                                TranslatableComponent("desc.ingameime.autoReplaceSlashChar"),
                                 autoReplaceSlashChar
                             )
                             .setDefaultValue(true)
-                            .setTooltip(TranslatableComponent("tooltip.autoReplaceSlashChar"))
+                            .setTooltip(TranslatableComponent("tooltip.ingameime.autoReplaceSlashChar"))
                             .setSaveConsumer { result -> autoReplaceSlashChar = result }
                             .build()
                     )
                     addEntry(
                         entryBuilder().startStrList(
-                            TranslatableComponent("desc.slashChars"),
+                            TranslatableComponent("desc.ingameime.slashChars"),
                             slashCharArray.map { it.toString() }
                         )
                             .setDefaultValue(mutableListOf("、"))
-                            .setTooltip(TranslatableComponent("tooltip.slashChars"))
+                            .setTooltip(TranslatableComponent("tooltip.ingameime.slashChars"))
                             .setCellErrorSupplier { str ->
                                 if (str.length > 1)
-                                    return@setCellErrorSupplier Optional.of(TranslatableComponent("desc.error.slashChars"))
+                                    return@setCellErrorSupplier Optional.of(TranslatableComponent("desc.error.ingameime.slashChars"))
                                 return@setCellErrorSupplier Optional.empty()
                             }
                             .setSaveConsumer { result ->

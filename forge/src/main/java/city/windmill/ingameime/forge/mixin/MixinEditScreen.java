@@ -1,6 +1,6 @@
 package city.windmill.ingameime.forge.mixin;
 
-import city.windmill.ingameime.forge.IngameIMEClient;
+import city.windmill.ingameime.forge.IngameIMEForge;
 import city.windmill.ingameime.forge.ScreenEvents;
 import kotlin.Pair;
 import net.minecraft.client.gui.screens.inventory.BookEditScreen;
@@ -14,12 +14,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 class MixinEditScreen {
     @Inject(method = "init", at = @At("TAIL"))
     private void onInit(CallbackInfo info) {
-        IngameIMEClient.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditOpen(this, new Pair<>(0, 0)));
+        IngameIMEForge.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditOpen(this, new Pair<>(0, 0)));
     }
 
     @Inject(method = "removed", at = @At("TAIL"))
     private void onRemove(CallbackInfo info) {
-        IngameIMEClient.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditClose(this));
+        IngameIMEForge.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditClose(this));
     }
 }
 

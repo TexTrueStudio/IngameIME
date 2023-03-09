@@ -1,5 +1,6 @@
 package city.windmill.ingameime.forge
 
+import city.windmill.ingameime.IngameIME
 import city.windmill.ingameime.client.ConfigHandler
 import city.windmill.ingameime.client.KeyHandler
 import city.windmill.ingameime.client.ScreenHandler
@@ -14,7 +15,6 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent
 import net.minecraftforge.network.NetworkConstants
-import org.apache.logging.log4j.LogManager
 import thedarkcolour.kotlinforforge.forge.FORGE_BUS
 import thedarkcolour.kotlinforforge.forge.LOADING_CONTEXT
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
@@ -22,9 +22,8 @@ import thedarkcolour.kotlinforforge.forge.runForDist
 import java.util.function.BiFunction
 
 
-@Mod("ingameime")
-object IngameIMEClient {
-    private val LOGGER = LogManager.getLogger()
+@Mod(IngameIME.MODID)
+object IngameIMEForge {
     val INGAMEIME_BUS = MOD_BUS
 
     init {
@@ -48,15 +47,15 @@ object IngameIMEClient {
         runForDist({
             val platform = System.getProperty("os.name").lowercase()
             if (platform.contains("win")) {
-                LOGGER.info("it is Windows OS! Loading mod...")
+                IngameIME.LOGGER.info("it is Windows OS! Loading mod...")
 
                 with(INGAMEIME_BUS) {
                     addListener(::onClientSetup)
                     addListener(::enqueueIMC)
                 }
             } else
-                LOGGER.warn("This mod cant work in $platform !")
-        }) { LOGGER.warn("This mod cant work in a DelicateServer!") }
+                IngameIME.LOGGER.warn("This mod cant work in $platform !")
+        }) { IngameIME.LOGGER.warn("This mod cant work in a DelicateServer!") }
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -97,6 +96,6 @@ object IngameIMEClient {
         }
         ConfigHandler.initialConfig()
         //Ensure native dll are loaded, or crash the game
-        LOGGER.info("Current IME State:${ExternalBaseIME.State}")
+        IngameIME.LOGGER.info("Current IME State:${ExternalBaseIME.State}")
     }
 }

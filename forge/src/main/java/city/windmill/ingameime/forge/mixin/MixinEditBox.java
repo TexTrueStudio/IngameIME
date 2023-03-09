@@ -1,6 +1,6 @@
 package city.windmill.ingameime.forge.mixin;
 
-import city.windmill.ingameime.forge.IngameIMEClient;
+import city.windmill.ingameime.forge.IngameIMEForge;
 import city.windmill.ingameime.forge.ScreenEvents;
 import com.mojang.blaze3d.vertex.PoseStack;
 import kotlin.Pair;
@@ -29,9 +29,9 @@ abstract class MixinEditBox extends AbstractWidget {
         int caretX = bordered ? x + 4 : x;
         int caretY = bordered ? y + (height - 8) / 2 : y;
         if (selected)
-            IngameIMEClient.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditOpen(this, new Pair<>(caretX, caretY)));
+            IngameIMEForge.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditOpen(this, new Pair<>(caretX, caretY)));
         else
-            IngameIMEClient.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditClose(this));
+            IngameIMEForge.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditClose(this));
     }
 
     @Inject(method = "mouseClicked", at = @At(value = "INVOKE",
@@ -41,13 +41,13 @@ abstract class MixinEditBox extends AbstractWidget {
     private void onFocused(double double_1, double double_2, int int_1, CallbackInfoReturnable<Boolean> cir) {
         int caretX = bordered ? x + 4 : x;
         int caretY = bordered ? y + (height - 8) / 2 : y;
-        IngameIMEClient.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditOpen(this, new Pair<>(caretX, caretY)));
+        IngameIMEForge.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditOpen(this, new Pair<>(caretX, caretY)));
     }
 
     @Inject(method = "renderButton",
             at = @At(value = "INVOKE", target = "java/lang/String.isEmpty()Z", ordinal = 1),
             locals = LocalCapture.CAPTURE_FAILSOFT)
     private void onCaret(PoseStack poseStack, int arg1, int arg2, float arg3, CallbackInfo ci, int l, int m, int n, String string, boolean bl, boolean bl2, int o, int p, int q, boolean bl3, int r) {
-        IngameIMEClient.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditCaret(this, new Pair<>(r, p)));
+        IngameIMEForge.INSTANCE.getINGAMEIME_BUS().post(new ScreenEvents.EditCaret(this, new Pair<>(r, p)));
     }
 }
