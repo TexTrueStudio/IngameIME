@@ -45,7 +45,7 @@ allprojects {
 
     tasks.withType<JavaCompile> {
         options.encoding = "UTF-8"
-        options.release.set(17)
+        options.release.set(16)
     }
 
     java {
@@ -54,10 +54,10 @@ allprojects {
 
     val compileKotlin: KotlinCompile by tasks
     compileKotlin.kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "16"
     }
     val compileTestKotlin: KotlinCompile by tasks
     compileTestKotlin.kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "16"
     }
 }
