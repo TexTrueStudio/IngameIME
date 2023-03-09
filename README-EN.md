@@ -4,7 +4,7 @@
 
 # IngameIME-Forge
 
-Forge port of [IngameIME](https://github.com/Windmill-City/IngameIME-Minecraft) 1.18+. Use input method in full screen Minecraft.
+Forge port of [IngameIME](https://github.com/Windmill-City/IngameIME-Minecraft) 1.17+. Use input method in full screen Minecraft.
 
 [ZH-CN](README.md) / EN-US
 

@@ -4,7 +4,7 @@
 
 # IngameIME-Forge
 
-[IngameIME](https://github.com/Windmill-City/IngameIME-Minecraft) 1.18+ 的 Forge 移植版。在全屏的Minecraft中使用输入法。
+[IngameIME](https://github.com/Windmill-City/IngameIME-Minecraft) 1.17+ 的 Forge 移植版。在全屏的Minecraft中使用输入法。
 
 ZH-CN / [EN-US](README-EN.md)
 
