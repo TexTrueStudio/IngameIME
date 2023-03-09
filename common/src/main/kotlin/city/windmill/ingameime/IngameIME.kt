@@ -1,8 +1,10 @@
 package city.windmill.ingameime
 
-import org.apache.logging.log4j.LogManager
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 object IngameIME {
     const val MODID = "ingameime"
-    val LOGGER = LogManager.getLogger()
+    const val MODNAME = "IngameIME"
+    val LOGGER: Logger = LoggerFactory.getLogger(MODNAME)
 }

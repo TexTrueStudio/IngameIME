@@ -1,5 +1,5 @@
 modLoader="kotlinforforge"
-loaderVersion="[3,)"
+loaderVersion="[2,)"
 issueTrackerURL="https://github.com/TexTrueStudio/IngameIME-Forge/issues"
 license="LGPL-3.0"
 
@@ -18,20 +18,20 @@ logoFile="icon.png"
 [[dependencies.ingameime]]
 modId="forge"
 mandatory=true
-versionRange="[38,)"
+versionRange="[37,)"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.ingameime]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.18,)"
+versionRange="[1.17,)"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.ingameime]]
 modId="cloth_config"
 mandatory=true
-versionRange="[6,)"
+versionRange="[5,)"
 ordering="AFTER"
 side="CLIENT"

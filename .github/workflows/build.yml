@@ -28,5 +28,5 @@ jobs:
       - name: Upload artifacts (forge)
         uses: actions/upload-artifact@v3
         with:
-          name: 1.18.x-forge
+          name: 1.17.x-forge
           path: ${{ github.workspace }}/forge/build/libs

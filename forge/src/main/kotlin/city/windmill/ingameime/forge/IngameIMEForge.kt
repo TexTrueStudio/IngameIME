@@ -7,14 +7,14 @@ import city.windmill.ingameime.client.ScreenHandler
 import city.windmill.ingameime.client.gui.OverlayScreen
 import city.windmill.ingameime.client.jni.ExternalBaseIME
 import net.minecraft.client.Minecraft
-import net.minecraftforge.client.ClientRegistry
-import net.minecraftforge.client.ConfigGuiHandler
-import net.minecraftforge.client.event.ScreenEvent
+import net.minecraftforge.client.event.GuiScreenEvent
 import net.minecraftforge.fml.IExtensionPoint
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent
-import net.minecraftforge.network.NetworkConstants
+import net.minecraftforge.fmlclient.ConfigGuiHandler
+import net.minecraftforge.fmlclient.registry.ClientRegistry
+import net.minecraftforge.fmllegacy.network.FMLNetworkConstants
 import thedarkcolour.kotlinforforge.forge.FORGE_BUS
 import thedarkcolour.kotlinforforge.forge.LOADING_CONTEXT
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
@@ -32,7 +32,7 @@ object IngameIMEForge {
             IExtensionPoint.DisplayTest::class.java
         ) {
             IExtensionPoint.DisplayTest(
-                { NetworkConstants.IGNORESERVERONLY },
+                { FMLNetworkConstants.IGNORESERVERONLY },
                 { _, _ -> true }
             )
         }
@@ -66,14 +66,13 @@ object IngameIMEForge {
     @Suppress("UNUSED_PARAMETER")
     private fun enqueueIMC(event: InterModEnqueueEvent) {
         with(FORGE_BUS) {
-            addListener<ScreenEvent.DrawScreenEvent.Post> {
-//                OverlayScreen.render(it.matrixStack, it.mouseX, it.mouseY, it.renderPartialTicks)
-                OverlayScreen.render(it.poseStack, it.mouseX, it.mouseY, it.partialTicks)
+            addListener<GuiScreenEvent.DrawScreenEvent.Post> {
+                OverlayScreen.render(it.matrixStack, it.mouseX, it.mouseY, it.renderPartialTicks)
             }
-            addListener<ScreenEvent.KeyboardKeyPressedEvent.Pre> {
+            addListener<GuiScreenEvent.KeyboardKeyPressedEvent.Pre> {
                 it.isCanceled = KeyHandler.KeyState.onKeyDown(it.keyCode, it.scanCode, it.modifiers)
             }
-            addListener<ScreenEvent.KeyboardKeyReleasedEvent.Pre> {
+            addListener<GuiScreenEvent.KeyboardKeyReleasedEvent.Pre> {
                 it.isCanceled = KeyHandler.KeyState.onKeyUp(it.keyCode, it.scanCode, it.modifiers)
             }
         }
