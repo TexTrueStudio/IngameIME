@@ -78,8 +78,6 @@ object ExternalBaseIME {
             CompositionState.Commit -> {
                 OverlayScreen.composition = null
                 iCommitListener.onCommit(str!!).onEach { ch ->
-//                    Minecraft.getInstance().keyboardHandler
-//                        .charTyped(Minecraft.getInstance().window.window, ch.code, 0)
                     charTyped.invoke(
                         Minecraft.getInstance().keyboardHandler,
                         Minecraft.getInstance().window.window,

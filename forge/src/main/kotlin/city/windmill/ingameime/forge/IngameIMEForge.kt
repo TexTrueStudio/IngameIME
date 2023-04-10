@@ -28,17 +28,10 @@ object IngameIMEForge {
 
     init {
         //Make sure the mod being absent on the other network side does not cause the client to display the server as incompatible
-        LOADING_CONTEXT.registerExtensionPoint(
-            IExtensionPoint.DisplayTest::class.java
-        ) {
-            IExtensionPoint.DisplayTest(
-                { NetworkConstants.IGNORESERVERONLY },
-                { _, _ -> true }
-            )
+        LOADING_CONTEXT.registerExtensionPoint(IExtensionPoint.DisplayTest::class.java) {
+            IExtensionPoint.DisplayTest({ NetworkConstants.IGNORESERVERONLY }, { _, _ -> true })
         }
-        LOADING_CONTEXT.registerExtensionPoint(
-            ConfigGuiHandler.ConfigGuiFactory::class.java
-        ) {
+        LOADING_CONTEXT.registerExtensionPoint(ConfigGuiHandler.ConfigGuiFactory::class.java) {
             ConfigGuiHandler.ConfigGuiFactory(BiFunction { _, parent ->
                 return@BiFunction ConfigHandler.createConfigScreen().setParentScreen(parent).build()
             })
@@ -67,7 +60,6 @@ object IngameIMEForge {
     private fun enqueueIMC(event: InterModEnqueueEvent) {
         with(FORGE_BUS) {
             addListener<ScreenEvent.DrawScreenEvent.Post> {
-//                OverlayScreen.render(it.matrixStack, it.mouseX, it.mouseY, it.renderPartialTicks)
                 OverlayScreen.render(it.poseStack, it.mouseX, it.mouseY, it.partialTicks)
             }
             addListener<ScreenEvent.KeyboardKeyPressedEvent.Pre> {
