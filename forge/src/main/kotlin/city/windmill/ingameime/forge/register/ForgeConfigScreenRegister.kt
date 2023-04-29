@@ -1,7 +1,5 @@
 package city.windmill.ingameime.forge.register
 
-import city.windmill.ingameime.forge.register.ForgeConfigScreenRegister.ModConfigScreenRegister.ModConfigScreenProvider
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
@@ -9,7 +7,6 @@ import net.minecraftforge.fml.ModContainer
 import net.minecraftforge.fml.ModList
 import net.minecraftforge.fmlclient.ConfigGuiHandler
 import java.util.concurrent.ConcurrentHashMap
-import java.util.function.BiFunction
 
 class ForgeConfigScreenRegister {
     fun getMod(id: String): ModConfigScreenRegister {
@@ -33,7 +30,7 @@ class ForgeConfigScreenRegister {
             container = ModList.get().getModContainerById(id).orElseThrow()
         }
 
-        override fun registerModConfigScreen(configScreenProvider: ModConfigScreenProvider) {
+        override fun registerModConfigScreen(configScreenProvider: ModConfigScreenRegister.ModConfigScreenProvider) {
             container.registerExtensionPoint(ConfigGuiHandler.ConfigGuiFactory::class.java) {
                 ConfigGuiHandler.ConfigGuiFactory { _, screen: Screen? ->
                     configScreenProvider.provide(screen)
