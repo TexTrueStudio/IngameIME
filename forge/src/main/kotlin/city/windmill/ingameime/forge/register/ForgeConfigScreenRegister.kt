@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap
 
 class ForgeConfigScreenRegister {
     fun getMod(id: String): ModConfigScreenRegister {
-        return mods.computeIfAbsent(id) { id: String? -> ModConfigScreenRegisterImpl(id) }
+        return mods.computeIfAbsent(id) { modid: String? -> ModConfigScreenRegisterImpl(modid) }
     }
 
     interface ModConfigScreenRegister {
