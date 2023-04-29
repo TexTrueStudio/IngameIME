@@ -6,6 +6,7 @@ import city.windmill.ingameime.client.KeyHandler
 import city.windmill.ingameime.client.ScreenHandler
 import city.windmill.ingameime.client.gui.OverlayScreen
 import city.windmill.ingameime.client.jni.ExternalBaseIME
+import city.windmill.ingameime.forge.register.ForgeConfigScreenRegister
 import net.minecraft.client.Minecraft
 import net.minecraftforge.client.event.GuiScreenEvent
 import net.minecraftforge.fml.IExtensionPoint
@@ -36,12 +37,18 @@ object IngameIMEForge {
                 { _, _ -> true }
             )
         }
+        /*
         LOADING_CONTEXT.registerExtensionPoint(
             ConfigGuiHandler.ConfigGuiFactory::class.java
         ) {
             ConfigGuiHandler.ConfigGuiFactory(BiFunction { _, parent ->
                 return@BiFunction ConfigHandler.createConfigScreen().setParentScreen(parent).build()
             })
+        }
+         */
+
+        ForgeConfigScreenRegister.instance.getMod(IngameIME.MODID).registerModConfigScreen { parent ->
+            return@registerModConfigScreen ConfigHandler.createConfigScreen().setParentScreen(parent).build()
         }
 
         runForDist({
