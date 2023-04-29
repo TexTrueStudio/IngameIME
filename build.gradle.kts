@@ -1,6 +1,3 @@
-import net.fabricmc.loom.api.LoomGradleExtensionAPI
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     java
     id("architectury-plugin") version "3.4-SNAPSHOT"
@@ -15,7 +12,7 @@ architectury {
 subprojects {
     apply(plugin = "dev.architectury.loom")
 
-    val loom = project.extensions.getByName<LoomGradleExtensionAPI>("loom")
+    val loom = project.extensions.getByName<net.fabricmc.loom.api.LoomGradleExtensionAPI>("loom")
 
     loom.silentMojangMappingsLicense()
 
@@ -52,11 +49,11 @@ allprojects {
         withSourcesJar()
     }
 
-    val compileKotlin: KotlinCompile by tasks
+    val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
     compileKotlin.kotlinOptions {
         jvmTarget = "16"
     }
-    val compileTestKotlin: KotlinCompile by tasks
+    val compileTestKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
     compileTestKotlin.kotlinOptions {
         jvmTarget = "16"
     }
