@@ -1,10 +1,10 @@
 package city.windmill.ingameime.forge.mixin;
 
 import city.windmill.ingameime.forge.ScreenEvents;
+import com.mojang.blaze3d.vertex.PoseStack;
 import kotlin.Pair;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.impl.client.gui.widget.basewidgets.TextFieldWidget;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(EditBox.class)
@@ -50,11 +51,11 @@ abstract class MixinEditBox extends AbstractWidget {
             ScreenEvents.INSTANCE.getEDIT_OPEN().invoker().onEditOpen(this, new Pair<>(caretX, caretY));
     }
 
-    @Inject(method = "onClick", at = @At(value = "INVOKE",
+    @Inject(method = "mouseClicked", at = @At(value = "INVOKE",
             target = "net/minecraft/util/Mth.floor(D)I",
             shift = At.Shift.BEFORE,
             ordinal = 0))
-    private void onFocused(double d, double e, CallbackInfo ci) {
+    private void onFocused(double d, double e, int i, CallbackInfoReturnable<Boolean> cir) {
         int x = getX();
         int y = getY();
         int caretX = bordered ? x + 4 : x;
@@ -68,7 +69,7 @@ abstract class MixinEditBox extends AbstractWidget {
     @Inject(method = "renderWidget",
             at = @At(value = "INVOKE", target = "java/lang/String.isEmpty()Z", ordinal = 1),
             locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void onCaret(GuiGraphics guiGraphics, int arg1, int arg2, float arg3, CallbackInfo ci, int l, int m, int n, String string, boolean bl, boolean bl2, int o, int p, int q, boolean bl3, int r) {
+    private void onCaret(PoseStack poseStack, int arg1, int arg2, float arg3, CallbackInfo ci, int l, int m, int n, String string, boolean bl, boolean bl2, int o, int p, int q, boolean bl3, int r) {
         ScreenEvents.INSTANCE.getEDIT_CARET().invoker().onEditCaret(this, new Pair<>(r, p));
     }
 }
@@ -94,7 +95,7 @@ abstract class MixinTextFieldWidget {
     @Inject(method = {"render"},
             at = @At(value = "INVOKE", target = "java/lang/String.isEmpty()Z", ordinal = 1),
             locals = LocalCapture.CAPTURE_FAILSOFT, remap = false)
-    private void onCaret(GuiGraphics guiGraphics, int arg1, int arg2, float arg3, CallbackInfo ci, int l, int m, int n, String string, boolean bl, boolean bl2, int o, int p, int q, boolean bl3, int r) {
+    private void onCaret(PoseStack poseStack, int arg1, int arg2, float arg3, CallbackInfo ci, int l, int m, int n, String string, boolean bl, boolean bl2, int o, int p, int q, boolean bl3, int r) {
         ScreenEvents.INSTANCE.getEDIT_CARET().invoker().onEditCaret(this, new Pair<>(r, p));
     }
 }

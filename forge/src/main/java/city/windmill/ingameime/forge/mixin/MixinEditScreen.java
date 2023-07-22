@@ -1,6 +1,7 @@
 package city.windmill.ingameime.forge.mixin;
 
 import city.windmill.ingameime.forge.ScreenEvents;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen;
 import org.joml.Matrix4f;
@@ -47,7 +48,7 @@ abstract class MixinBookEditScreen {
                     by = 2,
                     target = "Lnet/minecraft/client/gui/screens/inventory/BookEditScreen;convertLocalToScreen(Lnet/minecraft/client/gui/screens/inventory/BookEditScreen$Pos2i;)Lnet/minecraft/client/gui/screens/inventory/BookEditScreen$Pos2i;")
     )
-    private void onCaret_Book(GuiGraphics guiGraphics, BookEditScreen.Pos2i pos2i, boolean bl, CallbackInfo ci) {
+    private void onCaret_Book(PoseStack poseStack, BookEditScreen.Pos2i pos2i, boolean bl, CallbackInfo ci) {
         ScreenEvents.INSTANCE.getEDIT_CARET().invoker().onEditCaret(this, new Pair<>(pos2i.x, pos2i.y));
     }
 
@@ -69,9 +70,9 @@ abstract class MixinBookEditScreen {
 
     @Inject(method = "render",
             at = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/GuiGraphics;drawString(Lnet/minecraft/client/gui/Font;Lnet/minecraft/util/FormattedCharSequence;IIIZ)I"),
+                    target = "Lnet/minecraft/client/gui/Font;draw(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/util/FormattedCharSequence;FFI)I"),
             locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void onCaret_Book(GuiGraphics arg, int i, int j, float f, CallbackInfo ci,
+    private void onCaret_Book(PoseStack poseStack, int i, int j, float f, CallbackInfo ci,
                               int k, FormattedCharSequence formattedCharSequence, int m, int n) {
         ScreenEvents.INSTANCE.getEDIT_CARET().invoker().onEditCaret(this, new Pair<>(
                 k + 36 + (114 + n) / 2

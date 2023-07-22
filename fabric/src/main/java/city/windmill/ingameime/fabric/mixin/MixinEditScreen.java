@@ -1,6 +1,7 @@
 package city.windmill.ingameime.fabric.mixin;
 
 import city.windmill.ingameime.fabric.ScreenEvents;
+import com.mojang.blaze3d.vertex.PoseStack;
 import kotlin.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -45,15 +46,15 @@ abstract class MixinBookEditScreen {
                     by = 2,
                     target = "Lnet/minecraft/client/gui/screens/inventory/BookEditScreen;convertLocalToScreen(Lnet/minecraft/client/gui/screens/inventory/BookEditScreen$Pos2i;)Lnet/minecraft/client/gui/screens/inventory/BookEditScreen$Pos2i;")
     )
-    private void onCaret_Book(GuiGraphics guiGraphics, BookEditScreen.Pos2i pos2i, boolean bl, CallbackInfo ci) {
+    private void onCaret_Book(PoseStack poseStack, BookEditScreen.Pos2i pos2i, boolean bl, CallbackInfo ci) {
         ScreenEvents.INSTANCE.getEDIT_CARET().invoker().onEditCaret(this, new Pair<>(pos2i.x, pos2i.y));
     }
 
     @Inject(method = "render",
             at = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/GuiGraphics;drawString(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;IIIZ)I"),
+                    target = "Lnet/minecraft/client/gui/Font;draw(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/util/FormattedCharSequence;FFI)I"),
             locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void onCaret_Book(GuiGraphics arg, int i, int j, float f, CallbackInfo ci, int k, FormattedCharSequence formattedCharSequence, int m, int n) {
+    private void onCaret_Book(PoseStack poseStack, int i, int j, float f, CallbackInfo ci, int k, FormattedCharSequence formattedCharSequence, int m, int n) {
         ScreenEvents.INSTANCE.getEDIT_CARET().invoker().onEditCaret(this, new Pair<>(
                 k + 36 + (114 + n) / 2
                         - Minecraft.getInstance().font.width("_"),
@@ -71,13 +72,13 @@ abstract class MixinSignEditScreen extends Screen {
     @Inject(method = "renderSignText",
             at = {
                     @At(value = "INVOKE",
-                            target = "Lnet/minecraft/client/gui/GuiGraphics;drawString(Lnet/minecraft/client/gui/Font;Ljava/lang/String;IIIZ)I",
+                            target = "Fo",
                             ordinal = 1),
                     @At(value = "INVOKE",
-                            target = "Lnet/minecraft/client/gui/GuiGraphics;fill(IIIII)V",
+                            target = "Lnet/minecraft/client/gui/GuiComponent;fill",
                             ordinal = 0)},
             locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void onCaret_Sign(GuiGraphics guiGraphics, CallbackInfo ci, float g, BlockState lv, boolean bl, boolean bl2, float h, MultiBufferSource.BufferSource lv2, float k, int l, int m, int n, int o, Matrix4f matrix4f, int t, String string2, int u, int v) {
+    private void onCaret_Sign(PoseStack poseStack, CallbackInfo ci, float g, BlockState lv, boolean bl, boolean bl2, float h, MultiBufferSource.BufferSource lv2, float k, int l, int m, int n, int o, Matrix4f matrix4f, int t, String string2, int u, int v) {
         //s(23)->x,o(17)->y
         try {
             Field m03 = matrix4f.getClass().getDeclaredField("m03");
