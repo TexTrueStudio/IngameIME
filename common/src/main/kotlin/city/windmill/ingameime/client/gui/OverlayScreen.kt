@@ -5,8 +5,8 @@ import city.windmill.ingameime.client.gui.widget.CandidateListWidget
 import city.windmill.ingameime.client.gui.widget.CompositionWidget
 import city.windmill.ingameime.client.gui.widget.Widget
 import city.windmill.ingameime.client.jni.ExternalBaseIME
+import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiGraphics
 
 object OverlayScreen : net.minecraft.client.gui.components.Renderable {
     private val alphaModeWidget = AlphaModeWidget(Minecraft.getInstance().font)
@@ -78,14 +78,13 @@ object OverlayScreen : net.minecraft.client.gui.components.Renderable {
     /**
      * Render the widget when input method is active
      */
-    override fun render(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
+    override fun render(poseStack: PoseStack, mouseX: Int, mouseY: Int, delta: Float) {
         if (ExternalBaseIME.State) {
-            val poseStack = guiGraphics.pose()
             poseStack.pushPose()
             poseStack.translate(0.0, 0.0, 500.0)
-            compositionWidget.render(guiGraphics, mouseX, mouseY, delta)
-            alphaModeWidget.render(guiGraphics, mouseX, mouseY, delta)
-            candidateListWidget.render(guiGraphics, mouseX, mouseY, delta)
+            compositionWidget.render(poseStack, mouseX, mouseY, delta)
+            alphaModeWidget.render(poseStack, mouseX, mouseY, delta)
+            candidateListWidget.render(poseStack, mouseX, mouseY, delta)
             poseStack.popPose()
         }
     }

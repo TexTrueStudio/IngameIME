@@ -1,8 +1,7 @@
 package city.windmill.ingameime.client.gui.widget
 
+import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.gui.Font
-import net.minecraft.client.gui.GuiGraphics
-
 
 class CandidateListWidget(font: Font) : Widget(font) {
     var candidates: Array<String>? = null
@@ -18,9 +17,9 @@ class CandidateListWidget(font: Font) : Widget(font) {
         get() = 1 to 3
     
     @Suppress("NAME_SHADOWING")
-    override fun draw(guiGraphics: GuiGraphics, offsetX: Int, offsetY: Int, mouseX: Int, mouseY: Int, delta: Float) {
+    override fun draw(poseStack: PoseStack, offsetX: Int, offsetY: Int, mouseX: Int, mouseY: Int, delta: Float) {
         candidates?.let {
-            super.draw(guiGraphics, offsetX, offsetY, mouseX, mouseY, delta)
+            super.draw(poseStack, offsetX, offsetY, mouseX, mouseY, delta)
             
             var offsetX = offsetX + padding.first
             val offsetY = offsetY + padding.second
@@ -28,7 +27,7 @@ class CandidateListWidget(font: Font) : Widget(font) {
             for (str in it) {
                 drawItem.index = index
                 drawItem.text = str
-                drawItem.draw(guiGraphics, offsetX, offsetY, mouseX, mouseY, delta)
+                drawItem.draw(poseStack, offsetX, offsetY, mouseX, mouseY, delta)
                 offsetX += drawItem.width
                 index++
             }
@@ -50,23 +49,23 @@ class CandidateListWidget(font: Font) : Widget(font) {
             get() = 2 to 3
         
         @Suppress("NAME_SHADOWING", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-        override fun draw(guiGraphics: GuiGraphics, offsetX: Int, offsetY: Int, mouseX: Int, mouseY: Int, delta: Float) {
+        override fun draw(poseStack: PoseStack, offsetX: Int, offsetY: Int, mouseX: Int, mouseY: Int, delta: Float) {
             var offsetX = offsetX + padding.first
-            drawCenteredString(guiGraphics, font, index.toString(), offsetX + indexWidth / 2, offsetY, textColor)
+            drawCenteredString(poseStack, font, index.toString(), offsetX + indexWidth / 2, offsetY, textColor)
             offsetX += indexWidth
-            guiGraphics.drawString(font, text, offsetX, offsetY, textColor)
+            font.draw(poseStack, text, offsetX.toFloat(), offsetY.toFloat(), textColor)
         }
         
         @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
         private fun drawCenteredString(
-            guiGraphics: GuiGraphics,
+            poseStack: PoseStack,
             font: Font,
             text: String?,
             centerX: Int,
             y: Int,
             color: Int
         ) {
-            guiGraphics.drawString(font, text, (centerX - font.width(text) / 2), y, color)
+            font.draw(poseStack, text, (centerX - font.width(text) / 2).toFloat(), y.toFloat(), color)
         }
         
     }
