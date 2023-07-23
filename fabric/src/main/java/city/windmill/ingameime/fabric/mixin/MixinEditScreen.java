@@ -2,17 +2,18 @@ package city.windmill.ingameime.fabric.mixin;
 
 import city.windmill.ingameime.fabric.ScreenEvents;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Matrix4f;
 import kotlin.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen;
 import net.minecraft.client.gui.screens.inventory.BookEditScreen;
 import net.minecraft.client.gui.screens.inventory.SignEditScreen;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.resources.model.Material;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.level.block.state.BlockState;
-import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -21,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.lang.reflect.Field;
 
-@Mixin({Screen.class, AbstractSignEditScreen.class})
+@Mixin({Screen.class, SignEditScreen.class})
 class MixinScreen {
     @Inject(method = "removed", at = @At("TAIL"))
     private void onRemove(CallbackInfo info) {
@@ -62,29 +63,29 @@ abstract class MixinBookEditScreen {
     }
 }
 
-@Mixin(AbstractSignEditScreen.class)
+@Mixin(SignEditScreen.class)
 abstract class MixinSignEditScreen extends Screen {
     private MixinSignEditScreen(Component component) {
         super(component);
     }
 
-    @Inject(method = "renderSignText",
+    @Inject(method = "render",
             at = {
                     @At(value = "INVOKE",
-                            target = "Lnet/minecraft/client/gui/Font;drawInBatch(Ljava/lang/String;FFIZLorg/joml/Matrix4f;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/gui/Font$DisplayMode;IIZ)I",
+                            target = "Lnet/minecraft/client/gui/Font;drawInBatch(Ljava/lang/String;FFIZLcom/mojang/math/Matrix4f;Lnet/minecraft/client/renderer/MultiBufferSource;ZIIZ)I",
                             ordinal = 1),
                     @At(value = "INVOKE",
-                            target = "Lnet/minecraft/client/gui/GuiComponent;fill(Lcom/mojang/blaze3d/vertex/PoseStack;IIIIII)V",
+                            target = "net/minecraft/client/gui/screens/inventory/SignEditScreen.fill(Lcom/mojang/blaze3d/vertex/PoseStack;IIIII)V",
                             ordinal = 0)},
             locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void onCaret_Sign(PoseStack poseStack, CallbackInfo ci, float g, BlockState lv, boolean bl, boolean bl2, float h, MultiBufferSource.BufferSource lv2, float k, int l, int m, int n, int o, Matrix4f matrix4f, int t, String string2, int u, int v) {
+    private void onCaret_Sign(PoseStack poseStack, int i, int j, float f, CallbackInfo ci, float g, BlockState blockState, boolean bl, boolean bl2, float h, MultiBufferSource.BufferSource bufferSource, Material material, VertexConsumer vertexConsumer, float k, int l, int m, int n, int o, Matrix4f matrix4f, int p, String string, int r, int s) {
         //s(23)->x,o(17)->y
         try {
             Field m03 = matrix4f.getClass().getDeclaredField("m03");
             Field m13 = matrix4f.getClass().getDeclaredField("m13");
             m03.setAccessible(true);
             m13.setAccessible(true);
-            ScreenEvents.INSTANCE.getEDIT_CARET().invoker().onEditCaret(this, new Pair<>((Integer) m03.get(matrix4f) + v, (Integer) m13.get(matrix4f) + o));
+            ScreenEvents.INSTANCE.getEDIT_CARET().invoker().onEditCaret(this, new Pair<>((Integer) m03.get(matrix4f) + s, (Integer) m13.get(matrix4f) + o));
         } catch (Exception ignored) {
 
         }

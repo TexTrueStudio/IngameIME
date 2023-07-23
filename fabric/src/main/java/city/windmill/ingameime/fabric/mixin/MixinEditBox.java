@@ -28,11 +28,9 @@ abstract class MixinEditBox extends AbstractWidget {
         super(i, j, k, l, component);
     }
 
-    @Inject(method = {"setFocused"}, at = @At("HEAD"))
+    @Inject(method = {"setFocus", "onFocusedChanged"}, at = @At("HEAD"))
     private void onSelected(boolean selected, CallbackInfo info) {
-        int x = getX();
-        int y = getY();
-        int caretX = bordered ? getX() + 4 : x;
+        int caretX = bordered ? x + 4 : x;
         int caretY = bordered ? y + (height - 8) / 2 : y;
         if (selected && isEditable)
             ScreenEvents.INSTANCE.getEDIT_OPEN().invoker().onEditOpen(this, new Pair<>(caretX, caretY));
@@ -42,8 +40,6 @@ abstract class MixinEditBox extends AbstractWidget {
 
     @Inject(method = "setEditable", at = @At("HEAD"))
     private void onEditableChange(boolean bl, CallbackInfo ci) {
-        int x = getX();
-        int y = getY();
         int caretX = bordered ? x + 4 : x;
         int caretY = bordered ? y + (height - 8) / 2 : y;
         if (!bl) ScreenEvents.INSTANCE.getEDIT_CLOSE().invoker().onEditClose(this);
@@ -56,8 +52,6 @@ abstract class MixinEditBox extends AbstractWidget {
             shift = At.Shift.BEFORE,
             ordinal = 0))
     private void onFocused(double d, double e, int i, CallbackInfoReturnable<Boolean> cir) {
-        int x = getX();
-        int y = getY();
         int caretX = bordered ? x + 4 : x;
         int caretY = bordered ? y + (height - 8) / 2 : y;
         if (isFocused() && isEditable)
@@ -66,7 +60,7 @@ abstract class MixinEditBox extends AbstractWidget {
             ScreenEvents.INSTANCE.getEDIT_CLOSE().invoker().onEditClose(this);
     }
 
-    @Inject(method = "renderWidget",
+    @Inject(method = "renderButton",
             at = @At(value = "INVOKE", target = "java/lang/String.isEmpty()Z", ordinal = 1),
             locals = LocalCapture.CAPTURE_FAILSOFT)
     private void onCaret(PoseStack poseStack, int arg1, int arg2, float arg3, CallbackInfo ci, int l, int m, int n, String string, boolean bl, boolean bl2, int o, int p, int q, boolean bl3, int r) {

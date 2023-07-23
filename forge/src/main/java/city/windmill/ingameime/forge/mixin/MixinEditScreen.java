@@ -2,8 +2,7 @@ package city.windmill.ingameime.forge.mixin;
 
 import city.windmill.ingameime.forge.ScreenEvents;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen;
-import org.joml.Matrix4f;
+import com.mojang.math.Matrix4f;
 import kotlin.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -22,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.lang.reflect.Field;
 
-@Mixin({Screen.class, AbstractSignEditScreen.class})
+@Mixin({Screen.class, SignEditScreen.class})
 class MixinScreen {
     @Inject(method = "removed", at = @At("TAIL"))
     private void onRemove(CallbackInfo info) {
@@ -80,20 +79,20 @@ abstract class MixinBookEditScreen {
     }
 }
 
-@Mixin(AbstractSignEditScreen.class)
+@Mixin(SignEditScreen.class)
 abstract class MixinEditSignScreen extends Screen {
 
     protected MixinEditSignScreen(Component p_i51108_1_) {
         super(p_i51108_1_);
     }
 
-    @Inject(method = "renderSignText",
+    @Inject(method = "render",
             at = {
                     @At(value = "INVOKE",
-                            target = "Lnet/minecraft/client/gui/Font;drawInBatch(Ljava/lang/String;FFIZLorg/joml/Matrix4f;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/gui/Font$DisplayMode;IIZ)I",
+                            target = "Lnet/minecraft/client/gui/Font;drawInBatch(Ljava/lang/String;FFIZLcom/mojang/math/Matrix4f;Lnet/minecraft/client/renderer/MultiBufferSource;ZIIZ)I",
                             ordinal = 1),
                     @At(value = "INVOKE",
-                            target = "Lnet/minecraft/client/gui/GuiComponent;fill(Lcom/mojang/blaze3d/vertex/PoseStack;IIIII)V",
+                            target = "net/minecraft/client/gui/screens/inventory/SignEditScreen.fill(Lcom/mojang/blaze3d/vertex/PoseStack;IIIII)V",
                             ordinal = 0)},
             locals = LocalCapture.CAPTURE_FAILSOFT)
     private void onCaret_Sign(PoseStack arg, int i, int j, float f, CallbackInfo ci, float g, BlockState lv, boolean bl, boolean bl2, float h, MultiBufferSource.BufferSource lv2, float k, int l, int m, int n, int o, Matrix4f matrix4f, int p, String string, float q, int r, int s) {
