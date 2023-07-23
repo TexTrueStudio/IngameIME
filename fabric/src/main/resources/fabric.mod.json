@@ -31,7 +31,7 @@
   "depends": {
     "minecraft": "1.18.x",
     "fabricloader": "*",
-    "fabric": "*",
+    "fabric-api": "*",
     "fabric-language-kotlin": "*",
     "architectury": "*",
     "cloth-config": "*",
