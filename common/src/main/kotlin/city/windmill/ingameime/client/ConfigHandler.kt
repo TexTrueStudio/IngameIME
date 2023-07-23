@@ -12,7 +12,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.components.EditBox
 import net.minecraft.client.gui.screens.ChatScreen
 import net.minecraft.client.resources.language.I18n
-import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.TextComponent
 import org.apache.logging.log4j.LogManager
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
@@ -130,41 +130,41 @@ object ConfigHandler {
 
     fun createConfigScreen(): ConfigBuilder {
         return ConfigBuilder.create()
-            .setTitle(Component.literal(I18n.get("config.title")))
+            .setTitle(TextComponent(I18n.get("config.title")))
             .setSavingRunnable { saveConfig() }.apply {
-                getOrCreateCategory(Component.literal(I18n.get("config.category.chat"))).apply {
+                getOrCreateCategory(TextComponent(I18n.get("config.category.chat"))).apply {
                     addEntry(
                         entryBuilder()
                             .startBooleanToggle(
-                                Component.literal(I18n.get("desc.disableIMEInCommandMode")),
+                                TextComponent(I18n.get("desc.disableIMEInCommandMode")),
                                 disableIMEInCommandMode
                             )
                             .setDefaultValue(true)
-                            .setTooltip(Component.literal(I18n.get("tooltip.disableIMEInCommandMode")))
+                            .setTooltip(TextComponent(I18n.get("tooltip.disableIMEInCommandMode")))
                             .setSaveConsumer { result -> disableIMEInCommandMode = result }
                             .build()
                     )
                     addEntry(
                         entryBuilder()
                             .startBooleanToggle(
-                                Component.literal(I18n.get("desc.autoReplaceSlashChar")),
+                                TextComponent(I18n.get("desc.autoReplaceSlashChar")),
                                 autoReplaceSlashChar
                             )
                             .setDefaultValue(true)
-                            .setTooltip(Component.literal(I18n.get("tooltip.autoReplaceSlashChar")))
+                            .setTooltip(TextComponent(I18n.get("tooltip.autoReplaceSlashChar")))
                             .setSaveConsumer { result -> autoReplaceSlashChar = result }
                             .build()
                     )
                     addEntry(
                         entryBuilder().startStrList(
-                            Component.literal(I18n.get("desc.slashChars")),
+                            TextComponent(I18n.get("desc.slashChars")),
                             slashCharArray.map { it.toString() }
                         )
                             .setDefaultValue(mutableListOf("、"))
-                            .setTooltip(Component.literal(I18n.get("tooltip.slashChars")))
+                            .setTooltip(TextComponent(I18n.get("tooltip.slashChars")))
                             .setCellErrorSupplier { str ->
                                 if (str.length > 1)
-                                    return@setCellErrorSupplier Optional.of(Component.literal(I18n.get("desc.error.slashChars")))
+                                    return@setCellErrorSupplier Optional.of(TextComponent(I18n.get("desc.error.slashChars")))
                                 return@setCellErrorSupplier Optional.empty()
                             }
                             .setSaveConsumer { result ->
