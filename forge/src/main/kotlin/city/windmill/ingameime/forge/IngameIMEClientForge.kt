@@ -16,14 +16,13 @@ import dev.architectury.event.EventResult
 import dev.architectury.event.events.client.ClientGuiEvent
 import dev.architectury.event.events.client.ClientLifecycleEvent
 import dev.architectury.event.events.client.ClientScreenInputEvent
-import dev.architectury.platform.forge.EventBuses
 import dev.architectury.registry.client.keymappings.KeyMappingRegistry
 import net.minecraft.Util
 import net.minecraft.client.Minecraft
 import net.minecraftforge.fml.IExtensionPoint
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
-import net.minecraftforge.network.NetworkConstants
+import net.minecraftforge.fmllegacy.network.FMLNetworkConstants
 import thedarkcolour.kotlinforforge.forge.LOADING_CONTEXT
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 import thedarkcolour.kotlinforforge.forge.runForDist
@@ -41,7 +40,7 @@ object IngameIMEClientForge {
     init {
         //Make sure the mod being absent on the other network side does not cause the client to display the server as incompatible
         LOADING_CONTEXT.registerExtensionPoint(IExtensionPoint.DisplayTest::class.java) {
-            IExtensionPoint.DisplayTest(NetworkConstants::IGNORESERVERONLY) { _, _ -> true }
+            IExtensionPoint.DisplayTest(FMLNetworkConstants::IGNORESERVERONLY) { _, _ -> true }
         }
 
         runForDist({
