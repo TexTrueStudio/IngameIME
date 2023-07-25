@@ -41,9 +41,9 @@ dependencies {
     //Kotlin
     implementation("thedarkcolour:kotlinforforge:${rootProject.property("kotlinforforge_version")}")
     //Architectury API
-    modApi("dev.architectury:architectury-forge:${rootProject.property("architectury_version")}")
+    modApi("me.shedaniel:architectury-forge:${rootProject.property("architectury_version")}")
     //REI
-    modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${rootProject.property("rei_version")}")
+    modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${project.property("rei_version")}")
     //Cloth Config
     modImplementation("me.shedaniel.cloth:cloth-config-forge:${rootProject.property("cloth_config_version")}")
 

@@ -1,6 +1,6 @@
 package city.windmill.ingameime.forge
 
-import dev.architectury.event.EventFactory
+import me.shedaniel.architectury.event.EventFactory
 import net.minecraft.client.gui.screens.Screen
 
 object ScreenEvents {

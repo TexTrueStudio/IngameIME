@@ -18,7 +18,7 @@ dependencies {
     //Kotlin
     modImplementation("net.fabricmc:fabric-language-kotlin:${rootProject.property("fabric_language_kotlin_version")}")
     //Architectury API
-    modApi("dev.architectury:architectury:${rootProject.property("architectury_version")}")
+    modApi("me.shedaniel:architectury:${rootProject.property("architectury_version")}")
     //Cloth Config
     modImplementation("me.shedaniel.cloth:cloth-config:${rootProject.property("cloth_config_version")}") {
         exclude("net.fabricmc.fabric-api")

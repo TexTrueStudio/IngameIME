@@ -39,9 +39,9 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:${rootProject.property("fabric_version")}")
     //Cloth Api? "The Cloth API has largely been replaced by the Architectury API."
     //Architectury API
-    modApi("dev.architectury:architectury-fabric:${rootProject.property("architectury_version")}")
+    modApi("me.shedaniel:architectury-fabric:${rootProject.property("architectury_version")}")
     //REI
-    modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:${rootProject.property("rei_version")}")
+    modImplementation("me.shedaniel:RoughlyEnoughItems:${project.property("rei_version")}")
     //Stain
     modCompileOnly("io.github.ladysnake:satin:${rootProject.property("satin_version")}")
     //Kotlin

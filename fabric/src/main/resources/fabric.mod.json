@@ -29,9 +29,9 @@
     }
   ],
   "depends": {
-    "minecraft": "1.18.x",
+    "minecraft": "1.16.4~1.16.5",
     "fabricloader": "*",
-    "fabric-api": "*",
+    "fabric": "*",
     "fabric-language-kotlin": "*",
     "architectury": "*",
     "cloth-config": "*",

@@ -4,7 +4,7 @@ import city.windmill.ingameime.fabric.ScreenEvents;
 import com.mojang.blaze3d.vertex.PoseStack;
 import kotlin.Pair;
 import me.shedaniel.math.Rectangle;
-import me.shedaniel.rei.impl.client.gui.widget.basewidgets.TextFieldWidget;
+import me.shedaniel.rei.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;

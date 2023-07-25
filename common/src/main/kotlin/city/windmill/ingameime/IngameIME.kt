@@ -1,14 +1,15 @@
 package city.windmill.ingameime
 
 import city.windmill.ingameime.client.ConfigHandler
-import dev.architectury.platform.Platform
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import me.shedaniel.architectury.platform.Platform
+import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.Logger
+
 
 object IngameIME {
     const val MODID = "ingameime"
     const val MODNAME = "ContingameIME"
-    val LOGGER: Logger = LoggerFactory.getLogger(MODNAME)
+    val LOGGER: Logger = LogManager.getLogger()
 
     fun onInitClient() {
         Platform.getMod(MODID).registerConfigurationScreen { parent ->
