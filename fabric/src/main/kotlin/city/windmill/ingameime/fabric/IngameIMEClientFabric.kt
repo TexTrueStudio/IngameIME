@@ -9,17 +9,17 @@ import city.windmill.ingameime.fabric.ScreenEvents.EDIT_CLOSE
 import city.windmill.ingameime.fabric.ScreenEvents.EDIT_OPEN
 import city.windmill.ingameime.fabric.ScreenEvents.SCREEN_CHANGED
 import city.windmill.ingameime.fabric.ScreenEvents.WINDOW_SIZE_CHANGED
-import dev.architectury.event.EventResult
-import dev.architectury.event.events.client.ClientGuiEvent
-import dev.architectury.event.events.client.ClientLifecycleEvent
-import dev.architectury.event.events.client.ClientScreenInputEvent
 import ladysnake.satin.api.event.ResolutionChangeCallback
+import me.shedaniel.architectury.event.events.GuiEvent
+import me.shedaniel.architectury.event.events.client.ClientLifecycleEvent
+import me.shedaniel.architectury.event.events.client.ClientScreenInputEvent
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.Util
 import net.minecraft.client.Minecraft
+import net.minecraft.world.InteractionResult
 
 @Environment(EnvType.CLIENT)
 object IngameIMEClientFabric : ClientModInitializer {
@@ -38,7 +38,7 @@ object IngameIMEClientFabric : ClientModInitializer {
             ClientLifecycleEvent.CLIENT_STARTED.register(ClientLifecycleEvent.ClientState {
                 ConfigHandler.initialConfig()
 
-                ClientGuiEvent.RENDER_POST.register(ClientGuiEvent.ScreenRenderPost { _, graphics, mouseX, mouseY, delta ->
+                GuiEvent.RENDER_POST.register(GuiEvent.ScreenRenderPost { _, graphics, mouseX, mouseY, delta ->
                     //Track mouse move here
                     if (mouseX != prevX || mouseY != prevY) {
                         ScreenEvents.SCREEN_MOUSE_MOVE.invoker().onMouseMove(prevX, prevY, mouseX, mouseY)
@@ -54,15 +54,15 @@ object IngameIMEClientFabric : ClientModInitializer {
                 })
                 ClientScreenInputEvent.KEY_PRESSED_PRE.register(ClientScreenInputEvent.KeyPressed { _, _, keyCode, scanCode, modifiers ->
                     if (KeyHandler.KeyState.onKeyDown(keyCode, scanCode, modifiers))
-                        EventResult.interruptDefault()
+                        InteractionResult.CONSUME
                     else
-                        EventResult.pass()
+                        InteractionResult.PASS
                 })
                 ClientScreenInputEvent.KEY_RELEASED_PRE.register(ClientScreenInputEvent.KeyReleased { _, _, keyCode, scanCode, modifiers ->
                     if (KeyHandler.KeyState.onKeyUp(keyCode, scanCode, modifiers))
-                        EventResult.interruptDefault()
+                        InteractionResult.CONSUME
                     else
-                        EventResult.pass()
+                        InteractionResult.PASS
                 })
                 if (net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded("satin"))
                     ResolutionChangeCallback.EVENT.register(ResolutionChangeCallback { _, _ ->

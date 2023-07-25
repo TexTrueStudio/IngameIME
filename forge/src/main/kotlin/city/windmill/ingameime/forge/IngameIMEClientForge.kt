@@ -12,20 +12,23 @@ import city.windmill.ingameime.forge.ScreenEvents.EDIT_CLOSE
 import city.windmill.ingameime.forge.ScreenEvents.EDIT_OPEN
 import city.windmill.ingameime.forge.ScreenEvents.SCREEN_CHANGED
 import city.windmill.ingameime.forge.ScreenEvents.WINDOW_SIZE_CHANGED
-import dev.architectury.event.EventResult
-import dev.architectury.event.events.client.ClientGuiEvent
-import dev.architectury.event.events.client.ClientLifecycleEvent
-import dev.architectury.event.events.client.ClientScreenInputEvent
-import dev.architectury.registry.client.keymappings.KeyMappingRegistry
+import me.shedaniel.architectury.event.events.GuiEvent
+import me.shedaniel.architectury.event.events.client.ClientLifecycleEvent
+import me.shedaniel.architectury.event.events.client.ClientScreenInputEvent
+import me.shedaniel.architectury.registry.KeyBindings
 import net.minecraft.Util
 import net.minecraft.client.Minecraft
-import net.minecraftforge.fml.IExtensionPoint
+import net.minecraft.world.InteractionResult
+import net.minecraftforge.fml.ExtensionPoint
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
-import net.minecraftforge.fmllegacy.network.FMLNetworkConstants
+import net.minecraftforge.fml.network.FMLNetworkConstants
+import org.apache.commons.lang3.tuple.Pair
 import thedarkcolour.kotlinforforge.forge.LOADING_CONTEXT
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
 import thedarkcolour.kotlinforforge.forge.runForDist
+import java.util.function.BiPredicate
+import java.util.function.Supplier
 
 @Mod(IngameIME.MODID)
 object IngameIMEClientForge {
@@ -39,8 +42,8 @@ object IngameIMEClientForge {
 
     init {
         //Make sure the mod being absent on the other network side does not cause the client to display the server as incompatible
-        LOADING_CONTEXT.registerExtensionPoint(IExtensionPoint.DisplayTest::class.java) {
-            IExtensionPoint.DisplayTest(FMLNetworkConstants::IGNORESERVERONLY) { _, _ -> true }
+        LOADING_CONTEXT.registerExtensionPoint(ExtensionPoint.DISPLAYTEST) {
+            Pair.of(Supplier { FMLNetworkConstants.IGNORESERVERONLY }, BiPredicate { _, _ -> true })
         }
 
         runForDist({
@@ -58,11 +61,11 @@ object IngameIMEClientForge {
 
     private fun onInitializeClient(event: FMLClientSetupEvent) {
         IngameIME.onInitClient()
-        KeyMappingRegistry.register(KeyHandler.toggleKey)
+        KeyBindings.registerKeyBinding(KeyHandler.toggleKey)
         ClientLifecycleEvent.CLIENT_STARTED.register(ClientLifecycleEvent.ClientState {
             ConfigHandler.initialConfig()
 
-            ClientGuiEvent.RENDER_POST.register(ClientGuiEvent.ScreenRenderPost { _, graphics, mouseX, mouseY, delta ->
+            GuiEvent.RENDER_POST.register(GuiEvent.ScreenRenderPost { _, graphics, mouseX, mouseY, delta ->
                 //Track mouse move here
                 if (mouseX != prevX || mouseY != prevY) {
                     ScreenEvents.SCREEN_MOUSE_MOVE.invoker().onMouseMove(prevX, prevY, mouseX, mouseY)
@@ -78,15 +81,15 @@ object IngameIMEClientForge {
             })
             ClientScreenInputEvent.KEY_PRESSED_PRE.register(ClientScreenInputEvent.KeyPressed { _, _, keyCode, scanCode, modifiers ->
                 if (KeyHandler.KeyState.onKeyDown(keyCode, scanCode, modifiers))
-                    EventResult.interruptDefault()
+                    InteractionResult.CONSUME
                 else
-                    EventResult.pass()
+                    InteractionResult.PASS
             })
             ClientScreenInputEvent.KEY_RELEASED_PRE.register(ClientScreenInputEvent.KeyReleased { _, _, keyCode, scanCode, modifiers ->
                 if (KeyHandler.KeyState.onKeyUp(keyCode, scanCode, modifiers))
-                    EventResult.interruptDefault()
+                    InteractionResult.CONSUME
                 else
-                    EventResult.pass()
+                    InteractionResult.PASS
             })
             /*
             if (ModList.get().isLoaded("satin"))
