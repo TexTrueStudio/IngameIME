@@ -13,7 +13,7 @@ fun interface IEditStateListener {
 }
 
 object ScreenHandler {
-    private val LOGGER = LogManager.getFormatterLogger("ContingameIME|ScreenHandler")!!
+    private val LOGGER = LogManager.getFormatterLogger("IngameIME|ScreenHandler")!!
     
     enum class ScreenState {
         NULL_SCREEN {
@@ -51,7 +51,7 @@ object ScreenHandler {
         companion object {
             private var screenState = NULL_SCREEN
                 set(value) {
-                    LOGGER.trace("ScreenState {} -> {}", field, value)
+                    LOGGER.trace("ScreenState $field -> $value")
                     field = value
                     iScreenStateListener.onScreenState(field)
                     EditState.onScreenState(field)
@@ -60,7 +60,7 @@ object ScreenHandler {
             var iScreenStateListener: IScreenStateListener = IMEHandler.IMEState
 
             fun onScreenChange(oldScreen: Screen?, newScreen: Screen?) {
-                LOGGER.trace("{} -> {}", oldScreen, newScreen)
+                LOGGER.trace("$oldScreen -> $newScreen")
                 screenState = screenState.onScreenChange(oldScreen, newScreen)
             }
         }
@@ -112,7 +112,7 @@ object ScreenHandler {
                 private var editState = NULL_EDIT
                     set(value) {
                         if (field == value) return
-                        LOGGER.trace("EditState {} -> {}", editState, value)
+                        LOGGER.trace("EditState $editState -> $value")
                         field = value
                         iEditstateListener.onEditState(field)
                     }

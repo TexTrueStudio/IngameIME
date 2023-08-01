@@ -1,45 +1,37 @@
-modLoader = "kotlinforforge"
-loaderVersion = "[1.6,1.11.0),[1.11.1,)"
-license = "LGPL-3.0"
+modLoader="kotlinforforge"
+loaderVersion="[3,)"
+issueTrackerURL="https://github.com/TexTrueStudio/IngameIME-Forge/issues"
+license="LGPL-3.0"
 
 [[mods]]
-modId = "ingameime"
-version = "${version}"
-displayName = "ContingameIME"
-displayURL = "https://github.com/TexTrueStudio/IngameIME-ReInput"
-logoFile = "icon.png"
-credits = "Windmill_City"
-authors = "ThinkingStudio, TexTrue, Wybxc"
-description = '''
-An unofficial continuation of IngameIME.
-
+modId="ingameime"
+version="${version}"
+displayName="IngameIME"
+displayURL="https://github.com/TexTrueStudio/IngameIME-Forge"
+credits="Windmill_City, Wybxc"
+authors="TexTrue, ThinkingStudio"
+description='''
 Enable IME in FullScreen Minecraft
 '''
+logoFile="icon.png"
 
 [[dependencies.ingameime]]
-modId = "forge"
-mandatory = true
-versionRange = "[38,)"
-ordering = "NONE"
-side = "CLIENT"
+modId="forge"
+mandatory=true
+versionRange="[38,)"
+ordering="NONE"
+side="BOTH"
 
 [[dependencies.ingameime]]
-modId = "minecraft"
-mandatory = true
-versionRange = "[1.18,1.18.2]"
-ordering = "NONE"
-side = "CLIENT"
+modId="minecraft"
+mandatory=true
+versionRange="[1.18,)"
+ordering="NONE"
+side="BOTH"
 
 [[dependencies.ingameime]]
-modId = "architectury"
-mandatory = true
-versionRange = "[3,)"
-ordering = "NONE"
-side = "CLIENT"
-
-[[dependencies.ingameime]]
-modId = "cloth_config"
-mandatory = true
-versionRange = "[6,)"
-ordering = "AFTER"
-side = "CLIENT"
+modId="cloth_config"
+mandatory=true
+versionRange="[6,)"
+ordering="AFTER"
+side="CLIENT"

@@ -1,5 +1,6 @@
 package city.windmill.ingameime.forge.mixin;
 
+import city.windmill.ingameime.forge.IngameIMEForge;
 import city.windmill.ingameime.forge.ScreenEvents;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Matrix4f;
@@ -17,17 +18,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Surrogate;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.lang.reflect.Field;
-
-@Mixin({Screen.class, SignEditScreen.class})
-class MixinScreen {
-    @Inject(method = "removed", at = @At("TAIL"))
-    private void onRemove(CallbackInfo info) {
-        ScreenEvents.INSTANCE.getEDIT_CLOSE().invoker().onEditClose(this);
-    }
-}
 
 @Mixin({BookEditScreen.class, SignEditScreen.class})
 class MixinEditScreen {
@@ -35,21 +29,15 @@ class MixinEditScreen {
     private void onInit(CallbackInfo info) {
         ScreenEvents.INSTANCE.getEDIT_OPEN().invoker().onEditOpen(this, new Pair<>(0, 0));
     }
+
+    @Inject(method = "removed", at = @At("TAIL"))
+    private void onRemove(CallbackInfo info) {
+        ScreenEvents.INSTANCE.getEDIT_CLOSE().invoker().onEditClose(this);
+    }
 }
 
 @Mixin(BookEditScreen.class)
 abstract class MixinBookEditScreen {
-    @Inject(method = "renderCursor",
-            at = @At(value = "INVOKE",
-                    shift = At.Shift.BY,
-                    by = 2,
-                    target = "Lnet/minecraft/client/gui/screens/inventory/BookEditScreen;convertLocalToScreen(Lnet/minecraft/client/gui/screens/inventory/BookEditScreen$Pos2i;)Lnet/minecraft/client/gui/screens/inventory/BookEditScreen$Pos2i;")
-    )
-    private void onCaret_Book(PoseStack poseStack, BookEditScreen.Pos2i pos2i, boolean bl, CallbackInfo ci) {
-        ScreenEvents.INSTANCE.getEDIT_CARET().invoker().onEditCaret(this, new Pair<>(pos2i.x, pos2i.y));
-    }
-
-    /*
     @Inject(method = "convertLocalToScreen",
             at = @At("TAIL"))
     private void onCaret_Book(Object pos2i, CallbackInfoReturnable<Object> cir) {
@@ -63,7 +51,6 @@ abstract class MixinBookEditScreen {
 
         }
     }
-     */
 
     @Inject(method = "render",
             at = @At(value = "INVOKE",
@@ -95,28 +82,14 @@ abstract class MixinEditSignScreen extends Screen {
                             target = "net/minecraft/client/gui/screens/inventory/SignEditScreen.fill(Lcom/mojang/blaze3d/vertex/PoseStack;IIIII)V",
                             ordinal = 0)},
             locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void onCaret_Sign(PoseStack arg, int i, int j, float f, CallbackInfo ci, float g, BlockState lv, boolean bl, boolean bl2, float h, MultiBufferSource.BufferSource lv2, float k, int l, int m, int n, int o, Matrix4f matrix4f, int p, String string, float q, int r, int s) {
+    private void onCaret_Sign(PoseStack arg, int i, int j, float f, CallbackInfo ci, float g, BlockState lv, boolean bl, boolean bl2, float h, MultiBufferSource.BufferSource lv2, float k, int l, int m, int n, int o, Matrix4f lv5, int p, String string, float q, int r, int s) {
         //s(23)->x,o(17)->y
         try {
-            Field m03 = matrix4f.getClass().getDeclaredField("m03");
-            Field m13 = matrix4f.getClass().getDeclaredField("m13");
+            Field m03 = lv5.getClass().getDeclaredField("m03");
+            Field m13 = lv5.getClass().getDeclaredField("m13");
             m03.setAccessible(true);
             m13.setAccessible(true);
-            ScreenEvents.INSTANCE.getEDIT_CARET().invoker().onEditCaret(this, new Pair<>((Integer) m03.get(matrix4f) + s, (Integer) m13.get(matrix4f) + o));
-        } catch (Exception ignored) {
-
-        }
-    }
-
-    @Surrogate
-    private void onCaret_Sign(PoseStack poseStack, int i, int j, float f, CallbackInfo ci, float g, BlockState lv, boolean bl, boolean bl2, float h, MultiBufferSource.BufferSource lv2, float k, int l, int m, int n, int o, Matrix4f matrix4f, int t, String string2, int u, int v) {
-        //v(22)->x,o(17)->y
-        try {
-            Field m03 = matrix4f.getClass().getDeclaredField("m03");
-            Field m13 = matrix4f.getClass().getDeclaredField("m13");
-            m03.setAccessible(true);
-            m13.setAccessible(true);
-            ScreenEvents.INSTANCE.getEDIT_CARET().invoker().onEditCaret(this, new Pair<>((Integer) m03.get(matrix4f) + v, (Integer) m13.get(matrix4f) + o));
+            ScreenEvents.INSTANCE.getEDIT_CARET().invoker().onEditCaret(this, new Pair<>((Integer) m03.get(lv5) + s, (Integer) m13.get(lv5) + o));
         } catch (Exception ignored) {
 
         }

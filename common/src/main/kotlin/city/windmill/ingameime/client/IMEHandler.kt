@@ -7,7 +7,7 @@ import city.windmill.ingameime.client.jni.ICommitListener
 import org.apache.logging.log4j.LogManager
 
 object IMEHandler {
-    private val LOGGER = LogManager.getFormatterLogger("ContingameIME|IMEHandler")!!
+    private val LOGGER = LogManager.getFormatterLogger("IngameIME|IMEHandler")!!
 
     enum class IMEState {
         DISABLED {

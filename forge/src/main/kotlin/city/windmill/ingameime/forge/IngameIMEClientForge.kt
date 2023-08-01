@@ -45,13 +45,12 @@ object IngameIMEClientForge {
             IExtensionPoint.DisplayTest(NetworkConstants::IGNORESERVERONLY) { _, _ -> true }
         }
 
-        IngameIME.onInitClient()
+
 
         runForDist({
             if (Util.getPlatform() == Util.OS.WINDOWS) {
                 IngameIME.LOGGER.info("it is Windows OS! Loading mod...")
 
-                modEventBus.addListener(::onInterModEnqueue)
                 modEventBus.addListener(::onInitializeClient)
             } else {
                 IngameIME.LOGGER.warn("This mod cant work in ${Util.getPlatform()} !")
@@ -64,13 +63,8 @@ object IngameIMEClientForge {
     @Suppress("UNUSED_PARAMETER")
     private fun onInitializeClient(event: FMLClientSetupEvent) {
         KeyMappingRegistry.register(KeyHandler.toggleKey)
-    }
-
-    @Suppress("UNUSED_PARAMETER")
-    private fun onInterModEnqueue(event: InterModEnqueueEvent) {
+        ConfigHandler.initialConfig()
         ClientLifecycleEvent.CLIENT_STARTED.register(ClientLifecycleEvent.ClientState {
-            ConfigHandler.initialConfig()
-
             ClientGuiEvent.RENDER_POST.register(ClientGuiEvent.ScreenRenderPost { _, graphics, mouseX, mouseY, delta ->
                 //Track mouse move here
                 if (mouseX != prevX || mouseY != prevY) {
