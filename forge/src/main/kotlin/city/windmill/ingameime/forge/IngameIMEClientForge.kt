@@ -23,6 +23,7 @@ import net.minecraft.client.Minecraft
 import net.minecraftforge.fml.IExtensionPoint
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent
 import net.minecraftforge.network.NetworkConstants
 import thedarkcolour.kotlinforforge.forge.LOADING_CONTEXT
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
@@ -48,6 +49,7 @@ object IngameIMEClientForge {
             if (Util.getPlatform() == Util.OS.WINDOWS) {
                 IngameIME.LOGGER.info("it is Windows OS! Loading mod...")
 
+                modEventBus.addListener(::onInterModEnqueue)
                 modEventBus.addListener(::onInitializeClient)
             } else {
                 IngameIME.LOGGER.warn("This mod cant work in ${Util.getPlatform()} !")
@@ -57,9 +59,14 @@ object IngameIMEClientForge {
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun onInitializeClient(event: FMLClientSetupEvent) {
         IngameIME.onInitClient()
         KeyMappingRegistry.register(KeyHandler.toggleKey)
+    }
+
+    @Suppress("UNUSED_PARAMETER")
+    private fun onInterModEnqueue(event: InterModEnqueueEvent) {
         ClientLifecycleEvent.CLIENT_STARTED.register(ClientLifecycleEvent.ClientState {
             ConfigHandler.initialConfig()
 

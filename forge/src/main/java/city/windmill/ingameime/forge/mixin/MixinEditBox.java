@@ -68,6 +68,7 @@ abstract class MixinEditBox extends AbstractWidget {
     }
 }
 
+/*
 @SuppressWarnings("UnstableApiUsage")
 @Mixin(value = TextFieldWidget.class, remap = false)
 abstract class MixinTextFieldWidget {
@@ -93,3 +94,4 @@ abstract class MixinTextFieldWidget {
         ScreenEvents.INSTANCE.getEDIT_CARET().invoker().onEditCaret(this, new Pair<>(r, p));
     }
 }
+ */
