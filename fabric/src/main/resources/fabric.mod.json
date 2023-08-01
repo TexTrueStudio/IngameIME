@@ -34,8 +34,7 @@
     "fabric": "*",
     "fabric-language-kotlin": "*",
     "architectury": "*",
-    "cloth-config": "*",
-    "roughlyenoughitems": "*"
+    "cloth-config": "*"
   },
   "recommends": {
     "satin": "*"
