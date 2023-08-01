@@ -45,6 +45,8 @@ object IngameIMEClientForge {
             IExtensionPoint.DisplayTest(NetworkConstants::IGNORESERVERONLY) { _, _ -> true }
         }
 
+        IngameIME.onInitClient()
+
         runForDist({
             if (Util.getPlatform() == Util.OS.WINDOWS) {
                 IngameIME.LOGGER.info("it is Windows OS! Loading mod...")
@@ -61,7 +63,6 @@ object IngameIMEClientForge {
 
     @Suppress("UNUSED_PARAMETER")
     private fun onInitializeClient(event: FMLClientSetupEvent) {
-        IngameIME.onInitClient()
         KeyMappingRegistry.register(KeyHandler.toggleKey)
     }
 
