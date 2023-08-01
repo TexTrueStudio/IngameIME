@@ -43,10 +43,3 @@ mandatory = true
 versionRange = "[6,)"
 ordering = "AFTER"
 side = "CLIENT"
-
-[[dependencies.ingameime]]
-modId = "roughlyenoughitems"
-mandatory = true
-versionRange = "[8,)"
-ordering = "NONE"
-side = "CLIENT"
