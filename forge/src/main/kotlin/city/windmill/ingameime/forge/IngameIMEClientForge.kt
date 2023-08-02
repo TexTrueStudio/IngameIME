@@ -16,14 +16,12 @@ import dev.architectury.event.EventResult
 import dev.architectury.event.events.client.ClientGuiEvent
 import dev.architectury.event.events.client.ClientLifecycleEvent
 import dev.architectury.event.events.client.ClientScreenInputEvent
-import dev.architectury.platform.forge.EventBuses
 import dev.architectury.registry.client.keymappings.KeyMappingRegistry
 import net.minecraft.Util
 import net.minecraft.client.Minecraft
 import net.minecraftforge.fml.IExtensionPoint
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent
 import net.minecraftforge.network.NetworkConstants
 import thedarkcolour.kotlinforforge.forge.LOADING_CONTEXT
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
@@ -45,7 +43,7 @@ object IngameIMEClientForge {
             IExtensionPoint.DisplayTest(NetworkConstants::IGNORESERVERONLY) { _, _ -> true }
         }
 
-
+        IngameIME.registerConfigScreen()
 
         runForDist({
             if (Util.getPlatform() == Util.OS.WINDOWS) {

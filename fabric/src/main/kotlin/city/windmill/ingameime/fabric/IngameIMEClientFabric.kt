@@ -31,7 +31,7 @@ object IngameIMEClientFabric : ClientModInitializer {
     private var prevY = 0
 
     override fun onInitializeClient() {
-        IngameIME.onInitClient()
+        IngameIME.registerConfigScreen()
         if (Util.getPlatform() == Util.OS.WINDOWS) {
             IngameIME.LOGGER.info("it is Windows OS! Loading mod...")
 
