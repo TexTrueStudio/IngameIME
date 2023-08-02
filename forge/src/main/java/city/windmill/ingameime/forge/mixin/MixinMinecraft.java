@@ -1,7 +1,6 @@
 package city.windmill.ingameime.forge.mixin;
 
 import city.windmill.ingameime.forge.ScreenEvents;
-import city.windmill.ingameime.forge.IngameIMEForge;
 import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
