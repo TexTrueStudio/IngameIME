@@ -29,14 +29,16 @@
     }
   ],
   "depends": {
-    "minecraft": "1.18.x",
     "fabricloader": "*",
-    "fabric-api": "*",
+    "fabric-key-binding-api-v1": "*",
     "fabric-language-kotlin": "*",
     "architectury": "*",
     "cloth-config": "*"
   },
   "recommends": {
     "satin": "*"
+  },
+  "breaks": {
+    "minecraft": "1.18.x"
   }
 }

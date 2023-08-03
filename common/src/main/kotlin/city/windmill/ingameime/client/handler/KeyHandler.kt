@@ -1,6 +1,7 @@
-package city.windmill.ingameime.client
+package city.windmill.ingameime.client.handler
 
-import city.windmill.ingameime.client.KeyHandler.CombinationKeyState.Companion.onAction
+import city.windmill.ingameime.IngameIMEClient
+import city.windmill.ingameime.client.handler.KeyHandler.CombinationKeyState.Companion.onAction
 import com.mojang.blaze3d.platform.InputConstants
 import kotlinx.coroutines.*
 import net.minecraft.client.KeyMapping
@@ -21,7 +22,7 @@ object KeyHandler {
         "category.ingameime.keybinding"
     )
     
-    private val LOGGER = LogManager.getFormatterLogger("IngameIME|KeyHandler")!!
+    private val LOGGER = LogManager.getFormatterLogger(IngameIMEClient.MODNAME + "|KeyHandler")!!
     
     enum class KeyState {
         PENDING_KEY_DOWN {

@@ -1,5 +1,6 @@
-package city.windmill.ingameime.client
+package city.windmill.ingameime.client.handler
 
+import city.windmill.ingameime.IngameIMEClient
 import city.windmill.ingameime.client.gui.OverlayScreen
 import net.minecraft.client.gui.screens.Screen
 import org.apache.logging.log4j.LogManager
@@ -13,7 +14,7 @@ fun interface IEditStateListener {
 }
 
 object ScreenHandler {
-    private val LOGGER = LogManager.getFormatterLogger("IngameIME|ScreenHandler")!!
+    private val LOGGER = LogManager.getFormatterLogger(IngameIMEClient.MODNAME + "|ScreenHandler")!!
     
     enum class ScreenState {
         NULL_SCREEN {

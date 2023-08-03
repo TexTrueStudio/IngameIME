@@ -1,6 +1,7 @@
 package city.windmill.ingameime.client.jni
 
-import city.windmill.ingameime.client.IMEHandler
+import city.windmill.ingameime.IngameIMEClient
+import city.windmill.ingameime.client.handler.IMEHandler
 import city.windmill.ingameime.client.gui.OverlayScreen
 import net.minecraft.client.Minecraft
 import net.minecraft.resources.ResourceLocation
@@ -12,7 +13,7 @@ fun interface ICommitListener {
 }
 
 object ExternalBaseIME {
-    private val LOGGER = LogManager.getFormatterLogger("IngameIME|ExternalBaseIME")!!
+    private val LOGGER = LogManager.getFormatterLogger(IngameIMEClient.MODNAME + "|ExternalBaseIME")!!
 
     var iCommitListener: ICommitListener = IMEHandler.IMEState
 
@@ -71,22 +72,14 @@ object ExternalBaseIME {
 
     @Suppress("unused")
     private fun onComposition(str: String?, caret: Int, state: CompositionState) {
-        val charTyped = Minecraft.getInstance().keyboardHandler::class.java
-            .getDeclaredMethod("m_90889_", Long::class.java, Int::class.java, Int::class.java)
-            .apply { isAccessible = true }
         when (state) {
             CompositionState.Commit -> {
                 OverlayScreen.composition = null
                 iCommitListener.onCommit(str!!).onEach { ch ->
-                    charTyped.invoke(
-                        Minecraft.getInstance().keyboardHandler,
-                        Minecraft.getInstance().window.window,
-                        ch.code,
-                        0
-                    )
+                    Minecraft.getInstance().keyboardHandler
+                        .charTyped(Minecraft.getInstance().window.window, ch.code, 0)
                 }
             }
-
             CompositionState.Start,
             CompositionState.End,
             CompositionState.Update -> {

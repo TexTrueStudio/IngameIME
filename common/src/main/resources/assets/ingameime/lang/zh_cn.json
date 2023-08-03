@@ -3,13 +3,13 @@
   "category.ingameime.keybinding": "IngameIME",
   "alpha.ingameime.mode": "A",
   "native.ingameime.mode": "中",
-  "config.ingameime.title": "IngameIME 配置",
-  "config.category.ingameime.chat": "聊天框",
-  "desc.ingameime.disableIMEInCommandMode": "在命令模式关闭输入法",
-  "tooltip.ingameime.disableIMEInCommandMode": "(即按 / 打开聊天框时)",
-  "desc.ingameime.autoReplaceSlashChar": "自动替换命令前缀 (\"、 -> /\")",
-  "tooltip.ingameime.autoReplaceSlashChar": "当聊天框的光标在零位时",
-  "desc.ingameime.slashChars": "应当被替换为 \"/\" 的字符",
-  "desc.error.ingameime.slashChars": "每行一个字符",
-  "tooltip.ingameime.slashChars": "配合\"自动替换命令前缀\"使用"
+  "config.title": "IngameIME 配置",
+  "config.category.chat": "聊天框",
+  "desc.disableIMEInCommandMode": "在命令模式关闭输入法",
+  "tooltip.disableIMEInCommandMode": "(即按 / 打开聊天框时)",
+  "desc.autoReplaceSlashChar": "自动替换命令前缀 (\"、 -> /\")",
+  "tooltip.autoReplaceSlashChar": "当聊天框的光标在零位时",
+  "desc.slashChars": "应当被替换为 \"/\" 的字符",
+  "desc.error.slashChars": "每行一个字符",
+  "tooltip.slashChars": "配合\"自动替换命令前缀\"使用"
 }

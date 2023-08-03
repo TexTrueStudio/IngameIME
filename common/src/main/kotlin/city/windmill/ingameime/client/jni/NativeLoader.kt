@@ -1,18 +1,19 @@
 package city.windmill.ingameime.client.jni
 
+import city.windmill.ingameime.IngameIMEClient
 import net.minecraft.server.packs.resources.Resource
 import org.apache.logging.log4j.LogManager
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
 
 object NativeLoader {
-    private val LOGGER = LogManager.getFormatterLogger("IngameIME|NativeLoader")!!
+    private val LOGGER = LogManager.getFormatterLogger(IngameIMEClient.MODNAME + "|NativeLoader")!!
     
     /**
      * Loads library from minecraft Resource
      */
     fun load(lib: Resource) {
-        LOGGER.debug("Try load native from ${lib.sourceName}")
+        LOGGER.debug("Try load native from ${lib.location}")
         val tempFile = Files.createTempFile("IngameIME-Native", null).apply {
             LOGGER.debug("Copying Native to $this")
             Files.copy(lib.inputStream, this, StandardCopyOption.REPLACE_EXISTING)

@@ -1,6 +1,6 @@
 package city.windmill.ingameime.forge.mixin;
 
-import city.windmill.ingameime.forge.ScreenEvents;
+import city.windmill.ingameime.client.event.ClientScreenEventHooks;
 import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -21,11 +21,13 @@ class MixinMinecraft {
 
     @Inject(method = "setScreen", at = @At("HEAD"))
     private void onScreenChange(Screen screenIn, CallbackInfo info) {
-        ScreenEvents.INSTANCE.getSCREEN_CHANGED().invoker().onScreenChanged(screen, screenIn);
+        ClientScreenEventHooks.INSTANCE.getSCREEN_CHANGED().invoker().onScreenChanged(screen, screenIn);
+        //IngameIMEForge.INSTANCE.getINGAMEIME_BUS().post(new LegacyScreenEvents.ScreenChanged(screen, screenIn));
     }
 
     @Inject(method = "resizeDisplay", at = @At("RETURN"))
     private void onScreenSizeChanged(CallbackInfo info) {
-        ScreenEvents.INSTANCE.getWINDOW_SIZE_CHANGED().invoker().onWindowSizeChanged(window.getWidth(), window.getHeight());
+        ClientScreenEventHooks.INSTANCE.getWINDOW_SIZE_CHANGED().invoker().onWindowSizeChanged(window.getWidth(), window.getHeight());
+        //IngameIMEForge.INSTANCE.getINGAMEIME_BUS().post(new LegacyScreenEvents.WindowSizeChanged(window.getWidth(), window.getHeight()));
     }
 }
