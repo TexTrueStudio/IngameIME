@@ -131,41 +131,41 @@ object ConfigHandler {
 
     fun createConfigScreen(): ConfigBuilder {
         return ConfigBuilder.create()
-            .setTitle(TextComponent(I18n.get("config.title")))
+            .setTitle(TextComponent(I18n.get("config.ingameime.title")))
             .setSavingRunnable { saveConfig() }.apply {
-                getOrCreateCategory(TextComponent(I18n.get("config.category.chat"))).apply {
+                getOrCreateCategory(TextComponent(I18n.get("config.ingameime.category.chat"))).apply {
                     addEntry(
                         entryBuilder()
                             .startBooleanToggle(
-                                TextComponent(I18n.get("desc.disableIMEInCommandMode")),
+                                TextComponent(I18n.get("desc.ingameime.disableIMEInCommandMode")),
                                 disableIMEInCommandMode
                             )
                             .setDefaultValue(true)
-                            .setTooltip(TextComponent(I18n.get("tooltip.disableIMEInCommandMode")))
+                            .setTooltip(TextComponent(I18n.get("tooltip.ingameime.disableIMEInCommandMode")))
                             .setSaveConsumer { result -> disableIMEInCommandMode = result }
                             .build()
                     )
                     addEntry(
                         entryBuilder()
                             .startBooleanToggle(
-                                TextComponent(I18n.get("desc.autoReplaceSlashChar")),
+                                TextComponent(I18n.get("desc.ingameime.autoReplaceSlashChar")),
                                 autoReplaceSlashChar
                             )
                             .setDefaultValue(true)
-                            .setTooltip(TextComponent(I18n.get("tooltip.autoReplaceSlashChar")))
+                            .setTooltip(TextComponent(I18n.get("tooltip.ingameime.autoReplaceSlashChar")))
                             .setSaveConsumer { result -> autoReplaceSlashChar = result }
                             .build()
                     )
                     addEntry(
                         entryBuilder().startStrList(
-                            TextComponent(I18n.get("desc.slashChars")),
+                            TextComponent(I18n.get("desc.ingameime.slashChars")),
                             slashCharArray.map { it.toString() }
                         )
                             .setDefaultValue(mutableListOf("、"))
-                            .setTooltip(TextComponent(I18n.get("tooltip.slashChars")))
+                            .setTooltip(TextComponent(I18n.get("tooltip.ingameime.slashChars")))
                             .setCellErrorSupplier { str ->
                                 if (str.length > 1)
-                                    return@setCellErrorSupplier Optional.of(TextComponent(I18n.get("desc.error.slashChars")))
+                                    return@setCellErrorSupplier Optional.of(TextComponent(I18n.get("desc.ingameime.error.slashChars")))
                                 return@setCellErrorSupplier Optional.empty()
                             }
                             .setSaveConsumer { result ->
