@@ -1,6 +1,7 @@
-package city.windmill.ingameime.client
+package city.windmill.ingameime.client.handler
 
-import city.windmill.ingameime.client.KeyHandler.CombinationKeyState.Companion.onAction
+import city.windmill.ingameime.IngameIMEClient
+import city.windmill.ingameime.client.handler.KeyHandler.CombinationKeyState.Companion.onAction
 import com.mojang.blaze3d.platform.InputConstants
 import kotlinx.coroutines.*
 import net.minecraft.client.KeyMapping
@@ -21,11 +22,10 @@ object KeyHandler {
         "category.ingameime.keybinding"
     )
     
-    private val LOGGER = LogManager.getFormatterLogger("ContingameIME|KeyHandler")!!
+    private val LOGGER = LogManager.getFormatterLogger(IngameIMEClient.MODNAME + "|KeyHandler")!!
     
     enum class KeyState {
         PENDING_KEY_DOWN {
-            @OptIn(DelicateCoroutinesApi::class)
             override fun onKeyDown(keyCode: Int, scanCode: Int, modifier: Int): KeyState {
                 val longPressRepeat = GlobalScope.launch(start = CoroutineStart.LAZY) {
                     var longPressCounter = 0
@@ -66,7 +66,7 @@ object KeyHandler {
             override fun onKeyUp(keyCode: Int, scanCode: Int, modifier: Int): KeyState {
                 delayLongPress.get()?.cancel()
                 longPressRepeat.get()?.cancel() //may have started
-                LOGGER.trace("{}", KeyAction.KEY_CLICKED)
+                LOGGER.trace("${KeyAction.KEY_CLICKED}")
                 onAction(KeyAction.KEY_CLICKED)
                 return PENDING_KEY_DOWN
             }
@@ -87,7 +87,7 @@ object KeyHandler {
         companion object {
             var keyState = PENDING_KEY_DOWN
                 set(value) {
-                    LOGGER.trace("KeyState {} -> {}", field, value)
+                    LOGGER.trace("KeyState $field -> $value")
                     field = value
                 }
             lateinit var delayLongPress: WeakReference<Job>
@@ -125,7 +125,6 @@ object KeyHandler {
     
     enum class CombinationKeyState {
         PENDING_CLICK {
-            @OptIn(DelicateCoroutinesApi::class)
             override fun onAction(action: KeyState.KeyAction): CombinationKeyState {
                 return when (action) {
                     KeyState.KeyAction.KEY_CLICKED -> {
@@ -133,14 +132,14 @@ object KeyHandler {
                             delay(300)
                             combinationKeyState = PENDING_CLICK
                             Minecraft.getInstance().execute {
-                                LOGGER.trace("{}", CombinationKeyAction.CLICKED)
+                                LOGGER.trace("${CombinationKeyAction.CLICKED}")
                                 IMEHandler.IMEState.onAction(CombinationKeyAction.CLICKED)
                             }
                         })
                         PENDING_DOUBLE_CLICK
                     }
                     KeyState.KeyAction.KEY_LONG_PRESS -> {
-                        LOGGER.trace("{}", CombinationKeyAction.LONG_PRESS)
+                        LOGGER.trace("${CombinationKeyAction.LONG_PRESS}")
                         IMEHandler.IMEState.onAction(CombinationKeyAction.LONG_PRESS)
                         PENDING_CLICK
                     }
@@ -152,11 +151,11 @@ object KeyHandler {
                 when (action) {
                     KeyState.KeyAction.KEY_CLICKED -> {
                         delayDoubleClick.get()?.cancel()
-                        LOGGER.trace("{}", CombinationKeyAction.DOUBLE_CLICKED)
+                        LOGGER.trace("${CombinationKeyAction.DOUBLE_CLICKED}")
                         IMEHandler.IMEState.onAction(CombinationKeyAction.DOUBLE_CLICKED)
                     }
                     KeyState.KeyAction.KEY_LONG_PRESS -> {
-                        LOGGER.trace("{}", CombinationKeyAction.LONG_PRESS)
+                        LOGGER.trace("${CombinationKeyAction.LONG_PRESS}")
                         IMEHandler.IMEState.onAction(CombinationKeyAction.LONG_PRESS)
                     }
                 }
@@ -167,7 +166,7 @@ object KeyHandler {
         companion object : KeyState.IKeyActionListener {
             var combinationKeyState = PENDING_CLICK
                 set(value) {
-                    LOGGER.trace("CombinationKeyState {} -> {}", field, value)
+                    LOGGER.trace("CombinationKeyState $field -> $value")
                     field = value
                 }
             lateinit var delayDoubleClick: WeakReference<Job>

@@ -14,6 +14,7 @@ loom {
         convertAccessWideners.set(true)
         extraAccessWideners.add(loom.accessWidenerPath.get().asFile.name)
 
+        //mixinConfig("ingameime.mixins.json")
         mixinConfig("ingameime.forge.mixins.json")
     }
 }
@@ -42,8 +43,6 @@ dependencies {
     implementation("thedarkcolour:kotlinforforge:${rootProject.property("kotlinforforge_version")}")
     //Architectury API
     modApi("dev.architectury:architectury-forge:${rootProject.property("architectury_version")}")
-    //REI
-    modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${rootProject.property("rei_version")}")
     //Cloth Config
     modImplementation("me.shedaniel.cloth:cloth-config-forge:${rootProject.property("cloth_config_version")}")
 

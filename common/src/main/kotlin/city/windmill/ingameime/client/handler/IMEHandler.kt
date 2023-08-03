@@ -1,13 +1,14 @@
-package city.windmill.ingameime.client
+package city.windmill.ingameime.client.handler
 
-import city.windmill.ingameime.client.KeyHandler.CombinationKeyState.CombinationKeyAction.*
+import city.windmill.ingameime.IngameIMEClient
+import city.windmill.ingameime.client.handler.KeyHandler.CombinationKeyState.CombinationKeyAction.*
 import city.windmill.ingameime.client.gui.OverlayScreen
 import city.windmill.ingameime.client.jni.ExternalBaseIME
 import city.windmill.ingameime.client.jni.ICommitListener
 import org.apache.logging.log4j.LogManager
 
 object IMEHandler {
-    private val LOGGER = LogManager.getFormatterLogger("ContingameIME|IMEHandler")!!
+    private val LOGGER = LogManager.getFormatterLogger(IngameIMEClient.MODNAME + "|IMEHandler")!!
 
     enum class IMEState {
         DISABLED {

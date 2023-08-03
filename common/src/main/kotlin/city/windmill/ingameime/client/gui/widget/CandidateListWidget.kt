@@ -3,6 +3,7 @@ package city.windmill.ingameime.client.gui.widget
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.gui.Font
 
+
 class CandidateListWidget(font: Font) : Widget(font) {
     var candidates: Array<String>? = null
     
@@ -65,7 +66,10 @@ class CandidateListWidget(font: Font) : Widget(font) {
             y: Int,
             color: Int
         ) {
-            font.draw(poseStack, text, (centerX - font.width(text) / 2).toFloat(), y.toFloat(), color)
+            font.draw(
+                poseStack, text,
+                (centerX - font.width(text) / 2).toFloat(), y.toFloat(), color
+            )
         }
         
     }

@@ -31,7 +31,7 @@
   "depends": {
     "minecraft": "1.19~1.19.2",
     "fabricloader": "*",
-    "fabric-api": "*",
+    "fabric-key-binding-api-v1": "*",
     "fabric-language-kotlin": "*",
     "architectury": "*",
     "cloth-config": "*"

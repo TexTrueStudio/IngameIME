@@ -2,7 +2,10 @@ package city.windmill.ingameime.client.gui.widget
 
 import city.windmill.ingameime.client.jni.ExternalBaseIME
 import com.mojang.blaze3d.vertex.PoseStack
-import kotlinx.coroutines.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import net.minecraft.client.gui.Font
 import net.minecraft.client.resources.language.I18n
 import java.lang.ref.WeakReference
@@ -10,8 +13,7 @@ import java.lang.ref.WeakReference
 class AlphaModeWidget(font: Font) : Widget(font) {
     private val text get() = I18n.get(if (ExternalBaseIME.AlphaMode) "alpha.ingameime.mode" else "native.ingameime.mode")
     private var hideDelay: WeakReference<Job>? = null
-
-    @OptIn(DelicateCoroutinesApi::class)
+    
     override var active = false
         set(value) {
             hideDelay?.get()?.cancel()

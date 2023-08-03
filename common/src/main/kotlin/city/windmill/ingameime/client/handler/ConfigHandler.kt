@@ -1,5 +1,6 @@
-package city.windmill.ingameime.client
+package city.windmill.ingameime.client.handler
 
+import city.windmill.ingameime.IngameIMEClient
 import city.windmill.ingameime.client.jni.ExternalBaseIME
 import city.windmill.ingameime.client.jni.ICommitListener
 import com.google.gson.GsonBuilder
@@ -81,7 +82,7 @@ object ConfigHandler {
         Minecraft.getInstance().gameDirectory.toString(),
         "config", "ingameime.json"
     )
-    private val LOGGER = LogManager.getFormatterLogger("ContingameIME|Config")!!
+    private val LOGGER = LogManager.getFormatterLogger(IngameIMEClient.MODNAME + "|Config")!!
 
     fun initialConfig() {
         readConfig()
@@ -130,41 +131,41 @@ object ConfigHandler {
 
     fun createConfigScreen(): ConfigBuilder {
         return ConfigBuilder.create()
-            .setTitle(Component.literal(I18n.get("config.title")))
+            .setTitle(Component.literal(I18n.get("config.ingameime.title")))
             .setSavingRunnable { saveConfig() }.apply {
-                getOrCreateCategory(Component.literal(I18n.get("config.category.chat"))).apply {
+                getOrCreateCategory(Component.literal(I18n.get("config.ingameime.category.chat"))).apply {
                     addEntry(
                         entryBuilder()
                             .startBooleanToggle(
-                                Component.literal(I18n.get("desc.disableIMEInCommandMode")),
+                                Component.literal(I18n.get("desc.ingameime.disableIMEInCommandMode")),
                                 disableIMEInCommandMode
                             )
                             .setDefaultValue(true)
-                            .setTooltip(Component.literal(I18n.get("tooltip.disableIMEInCommandMode")))
+                            .setTooltip(Component.literal(I18n.get("tooltip.ingameime.disableIMEInCommandMode")))
                             .setSaveConsumer { result -> disableIMEInCommandMode = result }
                             .build()
                     )
                     addEntry(
                         entryBuilder()
                             .startBooleanToggle(
-                                Component.literal(I18n.get("desc.autoReplaceSlashChar")),
+                                Component.literal(I18n.get("desc.ingameime.autoReplaceSlashChar")),
                                 autoReplaceSlashChar
                             )
                             .setDefaultValue(true)
-                            .setTooltip(Component.literal(I18n.get("tooltip.autoReplaceSlashChar")))
+                            .setTooltip(Component.literal(I18n.get("tooltip.ingameime.autoReplaceSlashChar")))
                             .setSaveConsumer { result -> autoReplaceSlashChar = result }
                             .build()
                     )
                     addEntry(
                         entryBuilder().startStrList(
-                            Component.literal(I18n.get("desc.slashChars")),
+                            Component.literal(I18n.get("desc.ingameime.slashChars")),
                             slashCharArray.map { it.toString() }
                         )
                             .setDefaultValue(mutableListOf("、"))
-                            .setTooltip(Component.literal(I18n.get("tooltip.slashChars")))
+                            .setTooltip(Component.literal(I18n.get("tooltip.ingameime.slashChars")))
                             .setCellErrorSupplier { str ->
                                 if (str.length > 1)
-                                    return@setCellErrorSupplier Optional.of(Component.literal(I18n.get("desc.error.slashChars")))
+                                    return@setCellErrorSupplier Optional.of(Component.literal(I18n.get("desc.ingameime.error.slashChars")))
                                 return@setCellErrorSupplier Optional.empty()
                             }
                             .setSaveConsumer { result ->
