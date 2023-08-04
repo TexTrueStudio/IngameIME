@@ -17,13 +17,6 @@ Enable IME in FullScreen Minecraft
 '''
 
 [[dependencies.ingameime]]
-modId = "forge"
-mandatory = true
-versionRange = "[44,)"
-ordering = "NONE"
-side = "CLIENT"
-
-[[dependencies.ingameime]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.19.3,1.19.4]"
@@ -33,13 +26,13 @@ side = "CLIENT"
 [[dependencies.ingameime]]
 modId = "architectury"
 mandatory = true
-versionRange = "[7,)"
+versionRange = "[8,)"
 ordering = "NONE"
 side = "CLIENT"
 
 [[dependencies.ingameime]]
 modId = "cloth_config"
 mandatory = true
-versionRange = "[9,)"
+versionRange = "[10,)"
 ordering = "AFTER"
 side = "CLIENT"

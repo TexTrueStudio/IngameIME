@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.GuiComponent
 
+
 abstract class Widget(val font: Font) : net.minecraft.client.gui.components.Renderable {
     var offsetX = 0
     var offsetY = 0
@@ -23,7 +24,14 @@ abstract class Widget(val font: Font) : net.minecraft.client.gui.components.Rend
 
     open fun draw(poseStack: PoseStack, offsetX: Int, offsetY: Int, mouseX: Int, mouseY: Int, delta: Float) {
         //Background
-        GuiComponent.fill(poseStack, offsetX, offsetY, offsetX + width, offsetY + height, backgroundColor)
+        GuiComponent.fill(
+            poseStack,
+            offsetX,
+            offsetY,
+            offsetX + width,
+            offsetY + height,
+            backgroundColor
+        )
     }
 
     fun moveTo(x: Int, y: Int) {

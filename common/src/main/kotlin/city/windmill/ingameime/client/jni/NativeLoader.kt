@@ -6,7 +6,7 @@ import java.nio.file.Files
 import java.nio.file.StandardCopyOption
 
 object NativeLoader {
-    private val LOGGER = LogManager.getFormatterLogger("ContingameIME|NativeLoader")!!
+    private val LOGGER = LogManager.getFormatterLogger("IngameIME|NativeLoader")!!
     
     /**
      * Loads library from minecraft Resource

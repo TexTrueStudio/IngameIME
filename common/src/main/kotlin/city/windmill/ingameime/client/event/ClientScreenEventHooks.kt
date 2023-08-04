@@ -1,9 +1,12 @@
-package city.windmill.ingameime.forge
+package city.windmill.ingameime.client.event
 
 import dev.architectury.event.EventFactory
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
 import net.minecraft.client.gui.screens.Screen
 
-object ScreenEvents {
+@Environment(EnvType.CLIENT)
+object ClientScreenEventHooks {
     var SCREEN_MOUSE_MOVE = EventFactory.createEventResult<MouseMove>()
 
     val WINDOW_SIZE_CHANGED = EventFactory.createEventResult<WindowSizeChanged>()
