@@ -1,6 +1,6 @@
 package city.windmill.ingameime.fabric.mixin;
 
-import city.windmill.ingameime.fabric.ScreenEvents;
+import city.windmill.ingameime.client.event.ClientScreenEventHooks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,6 +16,6 @@ class MixinMinecraft {
 
     @Inject(method = "setScreen", at = @At("HEAD"))
     private void onScreenChange(Screen screenIn, CallbackInfo info) {
-        ScreenEvents.INSTANCE.getSCREEN_CHANGED().invoker().onScreenChanged(screen, screenIn);
+        ClientScreenEventHooks.INSTANCE.getSCREEN_CHANGED().invoker().onScreenChanged(screen, screenIn);
     }
 }

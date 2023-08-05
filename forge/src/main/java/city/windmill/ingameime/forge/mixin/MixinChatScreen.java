@@ -1,8 +1,8 @@
 package city.windmill.ingameime.forge.mixin;
 
-import city.windmill.ingameime.client.ConfigHandler;
-import city.windmill.ingameime.client.IMEHandler;
-import city.windmill.ingameime.client.ScreenHandler;
+import city.windmill.ingameime.client.handler.ConfigHandler;
+import city.windmill.ingameime.client.handler.IMEHandler;
+import city.windmill.ingameime.client.handler.ScreenHandler;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.ChatScreen;
 import org.spongepowered.asm.mixin.Mixin;

@@ -11,10 +11,7 @@
     "MixinEditBox",
     "MixinEditScreen",
     "MixinEditSignScreen",
-    "MixinFullScreen",
-    "MixinMinecraft",
-    "MixinScreen",
-    "MixinTextFieldWidget"
+    "MixinMinecraft"
   ],
   "injectors": {
     "defaultRequire": 0
