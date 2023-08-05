@@ -1,6 +1,6 @@
 package city.windmill.ingameime.fabric.mixin;
 
-import city.windmill.ingameime.fabric.ScreenEvents;
+import city.windmill.ingameime.client.event.ClientScreenEventHooks;
 import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Final;
@@ -18,6 +18,6 @@ class MixinFullScreen {
 
     @Inject(method = "resizeDisplay", at = @At("RETURN"))
     private void onScreenSizeChanged(CallbackInfo ci) {
-        ScreenEvents.INSTANCE.getWINDOW_SIZE_CHANGED().invoker().onWindowSizeChanged(window.getWidth(), window.getHeight());
+        ClientScreenEventHooks.INSTANCE.getWINDOW_SIZE_CHANGED().invoker().onWindowSizeChanged(window.getWidth(), window.getHeight());
     }
 }

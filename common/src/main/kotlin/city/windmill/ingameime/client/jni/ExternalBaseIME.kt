@@ -1,6 +1,7 @@
 package city.windmill.ingameime.client.jni
 
-import city.windmill.ingameime.client.IMEHandler
+import city.windmill.ingameime.IngameIMEClient
+import city.windmill.ingameime.client.handler.IMEHandler
 import city.windmill.ingameime.client.gui.OverlayScreen
 import net.minecraft.client.Minecraft
 import net.minecraft.resources.ResourceLocation
@@ -12,7 +13,7 @@ fun interface ICommitListener {
 }
 
 object ExternalBaseIME {
-    private val LOGGER = LogManager.getFormatterLogger("ContingameIME|ExternalBaseIME")!!
+    private val LOGGER = LogManager.getFormatterLogger(IngameIMEClient.MODNAME + "|ExternalBaseIME")!!
 
     var iCommitListener: ICommitListener = IMEHandler.IMEState
 

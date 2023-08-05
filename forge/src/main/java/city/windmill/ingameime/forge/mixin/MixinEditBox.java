@@ -1,6 +1,6 @@
 package city.windmill.ingameime.forge.mixin;
 
-import city.windmill.ingameime.forge.ScreenEvents;
+import city.windmill.ingameime.client.event.ClientScreenEventHooks;
 import com.mojang.blaze3d.vertex.PoseStack;
 import kotlin.Pair;
 import me.shedaniel.math.Rectangle;
@@ -33,18 +33,19 @@ abstract class MixinEditBox extends AbstractWidget {
         int caretX = bordered ? x + 4 : x;
         int caretY = bordered ? y + (height - 8) / 2 : y;
         if (selected && isEditable)
-            ScreenEvents.INSTANCE.getEDIT_OPEN().invoker().onEditOpen(this, new Pair<>(caretX, caretY));
+            ClientScreenEventHooks.INSTANCE.getEDIT_OPEN().invoker().onEditOpen(this, new Pair<>(caretX, caretY));
         else
-            ScreenEvents.INSTANCE.getEDIT_CLOSE().invoker().onEditClose(this);
+            ClientScreenEventHooks.INSTANCE.getEDIT_CLOSE().invoker().onEditClose(this);
     }
 
     @Inject(method = "setEditable", at = @At("HEAD"))
     private void onEditableChange(boolean bl, CallbackInfo ci) {
         int caretX = bordered ? x + 4 : x;
         int caretY = bordered ? y + (height - 8) / 2 : y;
-        if (!bl) ScreenEvents.INSTANCE.getEDIT_CLOSE().invoker().onEditClose(this);
+        if (!bl)
+            ClientScreenEventHooks.INSTANCE.getEDIT_CLOSE().invoker().onEditClose(this);
         else if (isFocused())
-            ScreenEvents.INSTANCE.getEDIT_OPEN().invoker().onEditOpen(this, new Pair<>(caretX, caretY));
+            ClientScreenEventHooks.INSTANCE.getEDIT_OPEN().invoker().onEditOpen(this, new Pair<>(caretX, caretY));
     }
 
     @Inject(method = "mouseClicked", at = @At(value = "INVOKE",
@@ -55,16 +56,16 @@ abstract class MixinEditBox extends AbstractWidget {
         int caretX = bordered ? x + 4 : x;
         int caretY = bordered ? y + (height - 8) / 2 : y;
         if (isFocused() && isEditable)
-            ScreenEvents.INSTANCE.getEDIT_OPEN().invoker().onEditOpen(this, new Pair<>(caretX, caretY));
+            ClientScreenEventHooks.INSTANCE.getEDIT_OPEN().invoker().onEditOpen(this, new Pair<>(caretX, caretY));
         else
-            ScreenEvents.INSTANCE.getEDIT_CLOSE().invoker().onEditClose(this);
+            ClientScreenEventHooks.INSTANCE.getEDIT_CLOSE().invoker().onEditClose(this);
     }
 
     @Inject(method = "renderButton",
             at = @At(value = "INVOKE", target = "java/lang/String.isEmpty()Z", ordinal = 1),
             locals = LocalCapture.CAPTURE_FAILSOFT)
     private void onCaret(PoseStack poseStack, int arg1, int arg2, float arg3, CallbackInfo ci, int l, int m, int n, String string, boolean bl, boolean bl2, int o, int p, int q, boolean bl3, int r) {
-        ScreenEvents.INSTANCE.getEDIT_CARET().invoker().onEditCaret(this, new Pair<>(r, p));
+        ClientScreenEventHooks.INSTANCE.getEDIT_CARET().invoker().onEditCaret(this, new Pair<>(r, p));
     }
 }
 
@@ -81,15 +82,15 @@ abstract class MixinTextFieldWidget {
         int caretX = hasBorder ? bounds.x + 4 : bounds.x;
         int caretY = hasBorder ? bounds.y + (bounds.height - 8) / 2 : bounds.y;
         if (selected)
-            ScreenEvents.INSTANCE.getEDIT_OPEN().invoker().onEditOpen(this, new Pair<>(caretX, caretY));
+            ClientScreenEventHooks.INSTANCE.getEDIT_OPEN().invoker().onEditOpen(this, new Pair<>(caretX, caretY));
         else
-            ScreenEvents.INSTANCE.getEDIT_CLOSE().invoker().onEditClose(this);
+            ClientScreenEventHooks.INSTANCE.getEDIT_CLOSE().invoker().onEditClose(this);
     }
 
     @Inject(method = {"render"},
             at = @At(value = "INVOKE", target = "java/lang/String.isEmpty()Z", ordinal = 1),
             locals = LocalCapture.CAPTURE_FAILSOFT, remap = false)
     private void onCaret(PoseStack poseStack, int arg1, int arg2, float arg3, CallbackInfo ci, int l, int m, int n, String string, boolean bl, boolean bl2, int o, int p, int q, boolean bl3, int r) {
-        ScreenEvents.INSTANCE.getEDIT_CARET().invoker().onEditCaret(this, new Pair<>(r, p));
+        ClientScreenEventHooks.INSTANCE.getEDIT_CARET().invoker().onEditCaret(this, new Pair<>(r, p));
     }
 }
