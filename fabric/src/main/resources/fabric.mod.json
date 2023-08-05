@@ -29,6 +29,7 @@
     }
   ],
   "depends": {
+    "minecraft": "1.18.x",
     "fabricloader": "*",
     "fabric-key-binding-api-v1": "*",
     "fabric-language-kotlin": "*",
@@ -37,8 +38,5 @@
   },
   "recommends": {
     "satin": "*"
-  },
-  "breaks": {
-    "minecraft": "1.18.x"
   }
 }
