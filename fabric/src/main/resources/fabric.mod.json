@@ -38,8 +38,5 @@
   },
   "recommends": {
     "satin": ">=1.6"
-  },
-  "breaks": {
-
   }
 }
