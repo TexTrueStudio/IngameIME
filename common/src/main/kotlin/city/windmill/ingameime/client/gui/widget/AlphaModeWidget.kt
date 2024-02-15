@@ -11,7 +11,6 @@ class AlphaModeWidget(font: Font) : Widget(font) {
     private val text get() = I18n.get(if (ExternalBaseIME.AlphaMode) "alpha.ingameime.mode" else "native.ingameime.mode")
     private var hideDelay: WeakReference<Job>? = null
 
-    @OptIn(DelicateCoroutinesApi::class)
     override var active = false
         set(value) {
             hideDelay?.get()?.cancel()

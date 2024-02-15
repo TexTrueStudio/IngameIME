@@ -42,7 +42,7 @@ allprojects {
 
     tasks.withType<JavaCompile> {
         options.encoding = "UTF-8"
-        options.release.set(17)
+        options.release.set(8)
     }
 
     java {
@@ -51,10 +51,10 @@ allprojects {
 
     val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
     compileKotlin.kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "8"
     }
     val compileTestKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
     compileTestKotlin.kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "8"
     }
 }
