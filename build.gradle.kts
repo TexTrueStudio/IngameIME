@@ -51,10 +51,10 @@ allprojects {
 
     val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
     compileKotlin.kotlinOptions {
-        jvmTarget = "8"
+        jvmTarget = "1.8"
     }
     val compileTestKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
     compileTestKotlin.kotlinOptions {
-        jvmTarget = "8"
+        jvmTarget = "1.8"
     }
 }
